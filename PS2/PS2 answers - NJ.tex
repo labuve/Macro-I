@@ -1,0 +1,210 @@
+\documentclass[]{article}
+\usepackage{amsmath, amsfonts}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage{geometry}
+\usepackage{cancel}
+\usepackage{graphicx}
+\usepackage{color}
+\usepackage{subcaption}
+\usepackage{cleveref}
+
+%opening
+\title{Problem Set II \\ \large Macroeconomics I}
+\author{Nurfatima Jandarova}
+\date{\today}
+\pagestyle{fancy}
+
+\lhead{Macroeconomics I, Problem Set II}
+\rhead{Nurfatima Jandarova}
+\renewcommand{\headrulewidth}{0.4pt}
+\fancyheadoffset{1 cm}
+
+\geometry{a4paper, left=20mm, top=20mm, bottom = 20mm, headheight=20mm}
+
+\sloppy
+\definecolor{lightgray}{gray}{0.5}
+\setlength{\parindent}{0pt}
+
+% To add text 'Exercise' before subsection numbering 
+
+\begin{document}
+
+\maketitle
+
+\section{}
+\subsection{}\label{1.1}
+Recall that since $T\rightarrow\infty$, our Bellman equation becomes stationary. Hence, we could drop the time indices in the Bellman equation:
+
+\begin{equation}
+	V(k) = \max\limits_{k'\in\Gamma(k)}u(k^\alpha + (1 - \delta)k - k') + \beta V(k'), \nonumber
+\end{equation}
+where $k$ denotes capital available at the beginning of current period; $k'$ denotes capital available at the beginning of the next period, and $\Gamma(k) = [0, k^\alpha + (1 - \delta)k]$ is the constraint set for $k'$.
+
+Since all the assumptions from the theory of maximum are satisfied and, moreover, we have a strictly increasing, strictly concave period utility function and set $\Gamma(k)$ is convex, by Theorem 4.8 in SLP, we can say that the value function is strictly concave. Therefore, we can use Benveniste-Scheinkman theorem to obtain the Euler equation from the Bellman equation:
+
+\begin{equation}
+	\begin{split}
+	\frac{\partial V(k)}{\partial k'}& = -\frac{\partial u(k^\alpha + (1 - \delta)k - k')}{\partial k'} + \beta\frac{\partial V(k')}{\partial k'} = 0 \\ \nonumber
+	\frac{\partial V(k)}{\partial k}& = \frac{\partial u(k^\alpha + (1 - \delta)k - k')}{\partial k}(\alpha k^{\alpha-1} + 1 - \delta) \Longrightarrow \\
+	\frac{\partial V(k)}{\partial k'}& = -\frac{\partial u(k^\alpha + (1 - \delta)k - k')}{\partial k'} + \beta\frac{\partial u({k'}^\alpha + (1 - \delta)k' - k'')}{\partial k'}(\alpha {k'}^{\alpha-1} + 1 - \delta) = 0 \\
+	\text{ Euler equation: }& \beta\frac{\partial u({k'}^\alpha + (1 - \delta)k' - k'')}{\partial k'}(\alpha {k'}^{\alpha-1} + 1 - \delta) = \frac{\partial u(k^\alpha + (1 - \delta)k - k')}{\partial k'}
+	\end{split}
+\end{equation}
+The optimal policy function for capital next period could be found by solving the above Euler equation. Then, the optimal policy function for consumption could be pinned down from the budget constraint.
+
+\subsection{}\label{1.2}
+With $\delta = 1$, $u(c) = \ln(c)$ and a guess for the functional form for $V(k) = A + B\ln(k)$ taking into account that the value function is time-invariant, the Bellman equation in \ref{1.1} could be rewritten as
+
+\begin{equation}
+	\begin{split}
+	V(k)& = \max\limits_{k'\in\Gamma(k)}\ln(k^\alpha - k') + \beta V(k') \\ \nonumber
+	V(k)& = \max\limits_{k'\in\Gamma(k)}\ln(k^\alpha - k') + \beta(A + B\ln(k')) \\
+	\text{FOC: }& \frac{1}{k^\alpha - k'} = \frac{\beta B}{k'} \\
+	k'& = \beta B(k^\alpha - k')\\
+	k'& = \frac{\beta B}{1 + \beta B}k^\alpha
+	\end{split}
+\end{equation}
+Substitute this back to the value function and apply the guess for $V(k)$ on the RHS:
+\begin{equation}
+	\begin{split}
+	A + B\ln(k)& = \alpha\ln(k) - \ln(1 + \beta B) + \beta A + \beta B\ln(\beta B) - \beta B\ln(1 + \beta B) + \alpha\beta B\ln(k) \\ \nonumber
+	(1-\beta)A + B\ln(k)& = \alpha\ln(k)(1 + \beta B) - (1 + \beta B)\ln(1 + \beta B) + \beta B\ln(\beta B)\\
+	\Longrightarrow&\begin{cases}
+	B& = \alpha(1 + \beta B)\\
+	(1-\beta)A& = \beta B\ln(\beta B) - (1 + \beta B)\ln(1 + \beta B)
+	\end{cases}\\
+	&\begin{cases}
+	B& = \frac{\alpha}{1 - \alpha\beta}\\
+	(1-\beta)A& = \frac{\alpha\beta}{1 - \alpha\beta}\ln(\frac{\alpha\beta}{1 - \alpha\beta}) - \frac{1}{1 - \alpha\beta}\ln(\frac{1}{1 - \alpha\beta})
+	\end{cases} \\
+	&\begin{cases}
+	B& = \frac{\alpha}{1 - \alpha\beta}\\
+	A& = \frac{\alpha\beta}{(1 - \alpha\beta)(1 - \beta)}\ln(\frac{\alpha\beta}{1 - \alpha\beta}) - \frac{1}{(1 - \alpha\beta)(1 - \beta)}\ln(\frac{1}{1 - \alpha\beta})
+	\end{cases}
+	\end{split}
+\end{equation}
+Hence, the value function is
+\begin{equation}
+	V(k) = \frac{\alpha\beta}{(1 - \alpha\beta)(1 - \beta)}\ln\begin{pmatrix}\frac{\alpha\beta}{1 - \alpha\beta}\end{pmatrix} - \frac{1}{(1 - \alpha\beta)(1 - \beta)}\ln\begin{pmatrix}\frac{1}{1 - \alpha\beta}\end{pmatrix} + \frac{\alpha}{1 - \alpha\beta}\ln(k) \nonumber
+\end{equation}
+and the policy function is $k' = g(k) = \alpha\beta k^\alpha$. Recall that in a finite horizon model we obtained a policy function $k_{t+1} = \alpha\beta\frac{1 - (\alpha\beta)^{T-t}}{1 - (\alpha\beta)^{T-t+1}}k_t^\alpha$. As $T\longrightarrow\infty, \lim\limits_{T\to\infty}\alpha\beta\frac{1 - (\alpha\beta)^{T-t}}{1 - (\alpha\beta)^{T-t+1}}k_t^\alpha = \alpha\beta k_t^\alpha$, hence the two are equivalent in the limit.
+
+\subsection{}\label{1.3}
+\begin{figure}[h]
+	\centering
+	\begin{subfigure}{0.5\textwidth}
+		\centering
+		\includegraphics[width=0.95\linewidth]{PS2NJ_01.eps}
+		\caption{}
+	\end{subfigure}%
+	\begin{subfigure}{0.5\textwidth}
+	\centering
+	\includegraphics[width=0.95\linewidth]{PS2NJ_02.eps}
+	\caption{}
+	\end{subfigure}
+	\begin{subfigure}{\textwidth}
+	\centering
+	\includegraphics[width = 0.45\linewidth]{PS2NJ_03.eps}
+	\caption{}
+	\end{subfigure}
+	\caption{Value function and optimal policy function in an infinite horizon model}
+\end{figure}
+
+As we can see at the figure above, we start with a relatively low level of capital and start accumulating more capital. Fairly quickly, the economy reaches the steady state and stays there forever. This is due to optimization over infinite horizon, i.e., there is no need to consume all remaining capital at the last period as there is no last period.
+
+\section{}\label{2}
+\subsection{}\label{2.1}
+\begin{itemize}
+	\item A consumer maximizes expected discounted sum of returns $\mathbb{E}_0\sum\limits_{t = 0}^{\infty}\beta^tu(c_t)$.
+	\item Aggregate productivity follows an AR(1) process $\ln(a') = \rho\ln(a) + \sigma\epsilon'$, where $\rho\in(0, 1)$, $a$ is current period's productivity, and $a'$ is the next period's productivity.
+	\item $c\in B(k) = [0 , af(k) + (1 - \delta)k] = [0, af(k)]$ when $\delta=1$ and $k'\in\Gamma(k) = [0, af(k) + (1 - \delta)k] = [0, af(k)]$ when $\delta=1$.
+\end{itemize}
+Then, the Bellman equation (BE) could be written as follows:
+\begin{equation}
+	V(a, k) = \max\limits_{k'\in\Gamma(k)}u(af(k) -k') + \beta\mathbb{E}_{a'|a}V(a', k') = \max\limits_{k'\in\Gamma(k)}\ln(ak^\alpha -k') + \beta\mathbb{E}_{a'|a}V(a', k')\nonumber
+\end{equation}
+Since the value function depends on $a$ and $k$ and the flow utility function is logarithmic, the guess for functional form of the value function is $V(a, k) = A_0 + A_1\ln(a) + A_2\ln(k)$. Also, notice that $\mathbb{E}(\ln(a')|a) = \mathbb{E}(\rho\ln(a)|a) + \cancelto{0}{\mathbb{E}(\sigma\epsilon'|a)} = \rho\ln(a)$. Substitute this into BE:
+\begin{equation}
+V(a, k) = \max\limits_{k'\in\Gamma(k)}\ln(ak^\alpha -k') + \beta\mathbb{E}_{a'|a}(A_0 + A_1\ln(a') + A_2\ln(k')) = \max\limits_{k'\in\Gamma(k)}\ln(ak^\alpha -k') + \beta(A_0 + A_1\rho\ln(a) + A_2\ln(k'))\nonumber
+\end{equation}
+Take FOC and solve for $k'$:
+\begin{equation}
+	\begin{split}
+	-\frac{1}{ak^\alpha -k'} + \frac{\beta A_2}{k'} = 0 \\ \nonumber
+	a\beta A_2k^\alpha - \beta A_2k' = k'\\
+	k' = \frac{a\beta A_2}{1 + \beta A_2}k^\alpha
+	\end{split}
+\end{equation}
+Substitute it back to the value function and plug in the guess:
+\begin{equation}
+	\begin{split}
+	A_0 + A_1\ln(a) + A_2\ln(k)& = \ln\begin{pmatrix}\frac{a}{1 + \beta A_2}k^\alpha\end{pmatrix} + \beta A_0 + \beta A_2\ln\begin{pmatrix}\frac{a\beta A_2}{1 + \beta A_2}\end{pmatrix} + \beta A_2\ln(k^\alpha) + \rho\beta A_1\ln(a) \\\nonumber
+	A_0 + A_1\ln(a) + A_2\ln(k)& = \ln(a) + \alpha\ln(k) - \ln(1 + \beta A_2) + \beta A_0 + \beta A_2\ln(a) + \beta A_2\ln(\beta A_2) - \\
+	& - \beta A_2\ln(1 + \beta A_2) + \alpha\beta A_2\ln(k) + \rho\beta A_1\ln(a) \Longrightarrow\\
+	&\begin{cases}
+	A_2 = \alpha + \alpha\beta A_2 \\
+	A_1 = 1 + \beta A_2 + \rho\beta A_1 \\
+	A_0 = -\ln(1 + \beta A_2) + \beta A_0 + \beta A_2\ln(\beta A_2) - \beta A_2\ln(1 + \beta A_2)
+	\end{cases}\\
+	&\begin{cases}
+	A_2 = \frac{\alpha}{1 - \alpha\beta}\\
+	A_1 = \frac{1}{(1 - \alpha\beta)(1 - \rho\beta)}\\
+	A_0 = \frac{\alpha\beta}{(1 - \alpha\beta)(1 - \beta)}\ln\begin{pmatrix}\frac{\alpha\beta}{1 - \alpha\beta}\end{pmatrix} - \frac{1}{(1 - \alpha\beta)(1 - \beta)}\ln\begin{pmatrix}\frac{1}{1 - \alpha\beta}\end{pmatrix}
+	\end{cases}
+	\end{split}
+\end{equation}
+
+Hence, the value function could be written as
+\begin{equation}
+	V(a, k) = \frac{\alpha\beta}{(1 - \alpha\beta)(1 - \beta)}\ln\begin{pmatrix}\frac{\alpha\beta}{1 - \alpha\beta}\end{pmatrix} - \frac{1}{(1 - \alpha\beta)(1 - \beta)}\ln\begin{pmatrix}\frac{1}{1 - \alpha\beta}\end{pmatrix} + \frac{1}{(1 - \alpha\beta)(1 - \rho\beta)}\ln(a) + \frac{\alpha}{1 - \alpha\beta}\ln(k)\nonumber
+\end{equation}
+and the decision rule is $k' = a\alpha\beta k^\alpha$
+
+\subsection{}
+
+\begin{figure}[h]
+	\centering
+	\begin{subfigure}{0.5\textwidth}
+		\centering
+		\includegraphics[width=0.95\linewidth]{PS2NJ_05.eps}
+		\caption{}
+		\label{fig:2.2a}
+	\end{subfigure}%
+	\begin{subfigure}{0.5\textwidth}
+		\centering
+		\includegraphics[width=0.95\linewidth]{PS2NJ_04.eps}
+		\caption{}
+		\label{fig:2.2b}
+	\end{subfigure}
+	\caption{Value function and decision rule at different levels of productivity}
+\end{figure}
+
+Not surprisingly, the level of the value function depends on the initial productivity level. Since higher productivity allows us to produce more for a given level of capital, the higher the value of productivity, the higher the level of the value function (\Cref{fig:2.2a}). Also, notice that with highest level of productivity, the steady-state capital (found at the intersection of decision rule and the 45$^\circ$ line) is much higher than with the lowest level of productivity (\Cref{fig:2.2b}).
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.5\linewidth]{PS2NJ_06.eps}
+	\caption{Simulated Markov chain for productivity levels}
+	\label{fig:2.2c}
+\end{figure}
+
+\begin{figure}[h]
+	\centering
+	\begin{subfigure}{0.5\textwidth}
+		\centering
+		\includegraphics[width=0.95\linewidth]{PS2NJ_07.eps}
+		\caption{}
+		\label{fig:2.2d}
+	\end{subfigure}%
+	\begin{subfigure}{0.5\textwidth}
+		\centering
+		\includegraphics[width=0.95\linewidth]{PS2NJ_08.eps}
+		\caption{}
+		\label{fig:2.2e}
+	\end{subfigure}
+	\caption{Optimal capital and consumption paths}
+\end{figure}
+
+Unlike in a deterministic world, capital and consumption approach the steady-state levels but do not stay there forever. This happens because stochastic productivity shocks drive the economy away. Nevertheless, they fluctuate around the steady-state levels since consumers would like to smooth their consumption over time.
+\end{document}

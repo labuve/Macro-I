@@ -1,0 +1,443 @@
+\documentclass[]{article}
+\usepackage{amsmath, amsfonts}
+\usepackage[inline]{enumitem}
+\usepackage{fancyhdr}
+\usepackage{geometry}
+\usepackage{cancel}
+\usepackage{graphicx}
+\usepackage{color}
+\usepackage{subcaption}
+\usepackage{cleveref}
+\usepackage{MnSymbol,wasysym}
+\usepackage{titlesec}
+
+%opening
+\title{Problem Set IV \\ \large Macroeconomics I}
+\author{Nurfatima Jandarova}
+\date{\today}
+\pagestyle{fancy}
+
+\lhead{Macroeconomics I, Problem Set IV}
+\rhead{Nurfatima Jandarova}
+\renewcommand{\headrulewidth}{0.4pt}
+\fancyheadoffset{1 cm}
+
+\geometry{a4paper, left=20mm, top=20mm, bottom = 20mm, headheight=20mm}
+
+\sloppy
+\definecolor{lightgray}{gray}{0.5}
+\setlength{\parindent}{0pt}
+
+\renewcommand{\thesubsection}{Exercise \arabic{subsection}}
+\renewcommand{\thesubsubsection}{\textbf{(\alph{subsubsection})}}
+\titleformat{\subsubsection}[runin]
+{\normalfont\normalsize}{\thesubsubsection}{1em}{}
+
+
+\begin{document}
+
+\maketitle
+
+\subsection{Exchange economy}
+
+\subsubsection{}
+
+Notice that here the state of the economy is pinned down by the realization of $\lambda_t$ and history is given by a sequence of past realizations of the state, $\lambda^t$. Since the state variable follows a Markov process we can express the probability of a specific history, $\pi_t(\lambda^t)$, as
+\begin{equation}
+	\label{eq:ex1jointp}
+	\pi_t(\lambda^t|\lambda_0) = \prod\limits_{i}\prod\limits_{j}P_{ij}^{n_{ij}}, \qquad i, j \in\bar{\lambda}
+\end{equation}
+where $n_{ij}$ is the number of times that there occurs a one-period transition from state $i$ to state $j$. Also notice that unlike the previous problem set the endowment process depends not only on the realization of the state at time $t$, but also on previous-period endowment. Hence, the process for endowment is history-dependent and is denoted $d_t(\lambda^t)$. Since the trading in date- and history-contingent assets occurs at time zero, they are classified as Arrow-Debreu securities. Define $q_t^0(\lambda^t)$ as the price for 1 consumption unit at time $t$ and history $\lambda^t$. Finally, since we have a single representative consumer we can drop index $i$ as all households are solving the same optimization problem.
+
+Then, an Arrow-Debreu competitive equilibrium is a sequence of allocations $\{c_t(\lambda^t)\}_{t = 0}^\infty$ and a price system $\{q_t^0(\lambda^t)\}_{t = 0}^\infty$ such that
+\begin{enumerate}[label = \roman*)]
+	\item allocations solve the household's problem, taking prices as given
+	\begin{equation}
+	c_t(\lambda^t) = \arg\max\limits_{\{\{c_t(\lambda^t)\}_{\lambda^t}\}_{t = 0}^\infty}\sum\limits_{t = 0}^\infty\sum\limits_{\lambda^t}\beta^t\pi_t(\lambda^t|\lambda_0)\frac{(c_t(\lambda^t))^{1-\gamma}}{1 - \gamma}\text{ s.t. }\sum\limits_{t = 0}^\infty\sum\limits_{\lambda^t}q_t^0(\lambda^t)[d_t(\lambda^t) - c_t(\lambda^t)]\geq 0 \nonumber
+	\end{equation}
+	\item price system clears the market
+	\begin{equation}
+	c_t(\lambda^t) \leq d_t(\lambda^t), \qquad\forall t \forall \lambda^t \nonumber
+	\end{equation}
+\end{enumerate}
+
+\subsubsection{}
+We solve for the household's problem
+\begin{equation}
+	\begin{split}
+		c_t(\lambda^t)& = \arg\max\limits_{\{\{c_t(\lambda^t)\}_{\lambda^t}\}_{t = 0}^\infty}\sum\limits_{t = 0}^\infty\sum\limits_{\lambda^t}\beta^t\pi_t(\lambda^t|\lambda_0)\frac{(c_t(\lambda^t))^{1-\gamma}}{1 - \gamma}\text{ s.t. }\sum\limits_{t = 0}^\infty\sum\limits_{\lambda^t}q_t^0(\lambda^t)[d_t(\lambda^t) - c_t(\lambda^t)]\geq 0 \\ \nonumber
+		\mathcal{L}& = \sum\limits_{t = 0}^\infty\sum\limits_{\lambda^t}\beta^t\pi_t(\lambda^t|\lambda_0)\frac{(c_t(\lambda^t))^{1-\gamma}}{1 - \gamma} + \mu\sum\limits_{t = 0}^\infty\sum\limits_{\lambda^t}q_t^0(\lambda^t)[d_t(\lambda^t) - c_t(\lambda^t)] \\
+		\frac{\partial\mathcal{L}}{\partial c_t(\lambda^t)}& = \beta^t\pi_t(\lambda^t|\lambda_0)(c_t(\lambda^t))^{-\gamma} - \mu q_t^0(\lambda^t) = 0, \qquad \forall t, \forall \lambda^t \qquad\qquad\Longrightarrow\\
+		q_t^0(\lambda^t)& = \frac{1}{\mu}\beta^t\pi_t(\lambda^t|\lambda_0)(c_t(\lambda^t))^{-\gamma}
+	\end{split}
+\end{equation}
+Notice that since the utility function is increasing, the budget constraint will be binding. We can also normalize the price $q_0^0(\lambda_0) = 1$ and rewrite the budget constraint at time $t = 0$ as $c_0(\lambda_0) = d_0(\lambda_0) = 1$. Substituting this into the above FOC at $t = 0$ we can get the condition for the Lagrange multiplier:
+\begin{equation}
+	\begin{split}
+		1& = \frac{1}{\mu}\beta^01(1)^{-\gamma} \nonumber \\
+		\mu& = 1
+		\intertext{Therefore, the price at any time and history is given by}
+		q_t^0(\lambda^t)& = \beta^t\pi_t(\lambda^t|\lambda_0)(d_t(\lambda^t))^{-\gamma}
+	\end{split}
+\end{equation}
+Now, in order to compute $q_5^0(\hat{\lambda}^5)$, where $\hat{\lambda}^5 = (0.97, 0.97, 1.03, 0.97, 1.03)$, we need $\pi_5(\hat{\lambda}^5)$ and $d_5(\hat{\lambda}^5)$. For the latter,
+\begin{equation}
+	\begin{split}
+		d_1(\lambda^1)& = \lambda_1d_0 \\\nonumber
+		d_2(\lambda^2)& = \lambda_2d_1 = \lambda_2\lambda_1d_0 \Longrightarrow\\
+		d_t(\lambda^t)& = \prod\limits_{s = 1}^t\lambda_sd_0 \Longrightarrow \\
+		d_5(\hat{\lambda}^5)& = 1.03^2\cdot 0.97^3
+	\end{split}	
+\end{equation}
+We can compute the joint probability using \eqref{eq:ex1jointp}:
+\begin{equation}
+	\pi_5(\hat{\lambda}^5|\lambda_0) = (0.8)^2(0.2)^20.1 \nonumber
+\end{equation}
+Thus,
+\begin{equation}
+	q_5^0(\hat{\lambda}^5) = 0.95^5(0.8)^2(0.2)^20.1(1.03^2\cdot 0.97^3)^{-2} = 0.00211289875 \nonumber
+\end{equation}
+
+\subsubsection{}
+
+Using the results above, we can calculate the Arrow price at $t = 5$ and history $\tilde{\lambda}^5 = (1.03, 1.03, 1.03, 1.03, 0.97)$:
+\begin{equation}
+	\begin{split}
+		d_5(\tilde{\lambda}^5)& = 1.03^40.97 \\ \nonumber
+		\pi_5(\tilde{\lambda}^5|\lambda_0)& = 0.2(0.9)^30.1 \\
+		q_5^0(\tilde{\lambda}^5)& = 0.95^50.2(0.9)^30.1(1.03^40.97)^{-2} = 0.00946529784
+	\end{split}
+\end{equation}
+
+\subsubsection{}
+
+In order to have the price for the entire endowment sequence we need to sum up over all possible time periods and over all possible histories:
+
+\begin{equation}
+	A_0(\lambda_0) = \sum\limits_{t = 0}^\infty\sum\limits_{\lambda^t|\lambda_0}q_t^0(\lambda^t)d_t(\lambda^t) = \sum\limits_{t = 0}^\infty\sum\limits_{\lambda^t|\lambda_0}\beta^t\pi_t(\lambda^t|\lambda_0)(d_t(\lambda^t))^{1-\gamma} = \sum\limits_{t = 0}^\infty\sum\limits_{\lambda^t|\lambda_0}\beta^t\pi_t(\lambda^t|\lambda_0)\prod\limits_{s = 1}^t\lambda_s^{1-\gamma}d_0^{1-\gamma}\nonumber
+\end{equation}
+
+\subsubsection{}
+
+Define $\tilde{\Lambda}^5 = \{0.97, 1.03\}^4\times\{0.97\}$ a space of all histories at time $t = 5$ such that $\tilde{\lambda}_5 = 0.97$. Also, notice that $\tilde{n}_{ij}$ is the number of transitions from state $i$ to state $j$ for each $\tilde{\lambda}^5\in\tilde{\Lambda}^5$. Hence, the average price of a claim on consumption in period 5 contingent on $\tilde{\lambda}^5\in\tilde{\Lambda}^5$ is
+\begin{equation}
+	\sum\limits_{\tilde{\lambda}^5\in\tilde{\Lambda}^5}\beta^5\prod\limits_{i}\prod\limits_{j}P_{ij}^{\tilde{n}_{ij}}\prod\limits_{k = 1}^4\tilde{\lambda}_k0.97 \nonumber
+\end{equation}
+
+\subsubsection{}
+Now, we have different market structure, described as Arrow securities market. Define $a_{t+1}(\lambda^t, \lambda_{t+1})$ as the amount of claims on consumption at time $t + 1$, history $\lambda^{t+1}$ bought by a household at time $t$, history $\lambda^t$. Define the respective price of an asset $q_{t+1}^t(\lambda^t, \lambda_{t+1})$. We also need to define the borrowing limit for an agent at each possible history: $A_{t + 1}(\lambda^{t+1}), \forall \lambda^{t+1}$.
+
+Despite a change in the market structure, the assumption about the endowment process remains at place. Although growth rate follows two-state Markov process, endowment depends on the previous history of growth rates. The lecture notes and the book explicitly assumes that endowment at each period in time only depends on the realization of the state at the current period and does not depend on the whole history to write down the problem in recursive formulation. Therefore, I am not convinced I can write the problem recursively. So, I do it sequentially.
+
+Hence, the competitive equilibrium with sequential trading of Arrow securities is a collection of borrowing limits $\{A_t(\lambda^t)\}$, allocations $\{c_t(\lambda^t)\}$, asset positions $a_{t+1}(\lambda^t, \lambda_{t+1})$ and price system $\{q_{t+1}^t(\lambda^t, \lambda_{t+1})\}$ such that
+
+\begin{enumerate}[label = \roman*)]
+	\item allocations and asset positions solve the household's problem, taking prices as given
+	\begin{equation}
+	\begin{split}
+		\{c_t(\lambda^t), a_{t+1}(\lambda^t, \lambda_{t+1})\}& = \arg\max\limits_{\{\{c_t(\lambda^t), a_{t+1}(\lambda^t, \lambda_{t+1})\}_{\lambda^t}\}_{t = 0}^\infty}\sum\limits_{t = 0}^\infty\sum\limits_{\lambda^t}\beta^t\pi_t(\lambda^t|\lambda_0)\frac{(c_t(\lambda^t))^{1-\gamma}}{1 - \gamma}\\
+		\text{ s.t. }&c_t(\lambda^t) + \sum\limits_{\lambda_{t+1}|\lambda^t}q_{t+1}^t(\lambda^t, \lambda_{t+1})a_{t+1}(\lambda^t, \lambda_{t+1}) = a_{t}(\lambda^t) + d_t(\lambda^t), \forall t, \forall \lambda^t \\
+		&a_{t+1}(\lambda^t, \lambda_{t+1}) \geq -A_{t+1}(\lambda^{t+1}), \qquad\forall \lambda^{t+1}\\
+		&a_0(\lambda_0) = 0\nonumber
+	\end{split}
+	\end{equation}
+	\item markets clear
+	\begin{equation}
+		\begin{split}
+			&c_t(\lambda^t) \leq d_t(\lambda^t), \qquad\forall t, \forall\lambda^t \\
+			&a_{t+1}(\lambda^t, \lambda_{t+1}) = 0, \qquad\forall t, \forall\lambda^t, \forall\lambda_{t+1}\nonumber
+		\end{split}
+	\end{equation}
+\end{enumerate}
+
+\subsubsection{}
+
+Define $q_\tau^{t}(\lambda^{t}, \lambda^\tau)$ the price in period $t$, history $\lambda^t$ of a claim to consumption unit in time $\tau$ and history $\lambda^\tau$. Then, the natural debt limit could be computed as
+\begin{equation}
+	\begin{split}
+		A_{t+1}(\lambda^{t+1})& = \sum\limits_{\tau = t+1}^\infty\sum\limits_{\lambda^\tau|\lambda^{t+1}}q_\tau^{t+1}(\lambda^{t+1}, \lambda^\tau)d_\tau(\lambda^\tau) \\
+		& = \sum\limits_{\tau = t+1}^\infty\sum\limits_{\lambda^\tau|\lambda^{t+1}}q_\tau^{t+1}(\lambda^{t+1}, \lambda^\tau)\prod\limits_{s = 1}^\tau\lambda_sd_0 \nonumber
+	\end{split}
+\end{equation}
+
+\subsubsection{}
+Define $\beta^t\pi_t(\lambda^t|\lambda_0)\eta_t(\lambda^t)$ the Lagrange multiplier for the budget constraint and $\beta^t\pi_t(\lambda^t|\lambda_0)\sum\limits_{\lambda_{t+1}\in\bar{\lambda}}\nu_{t+1}(\lambda^t, \lambda_{t+1})$ the Lagrange multiplier for the borrowing constraint. Then,
+\begin{equation}
+	\begin{split}
+		\mathcal{L}& = \sum\limits_{t = 0}^\infty\sum\limits_{\lambda^t}\beta^t\pi_t(\lambda^t|\lambda_0)\begin{Bmatrix}\frac{(c_t(\lambda^t))^{1-\gamma}}{1 - \gamma} + \eta_t(\lambda^t)\begin{bmatrix}a_{t}(\lambda^{t}) + d_t(\lambda^t) - c_t(\lambda^t) - \sum\limits_{\lambda_{t+1}|\lambda^t}q_{t+1}^t(\lambda^t, \lambda_{t+1})a_{t+1}(\lambda^t, \lambda_{t+1})\end{bmatrix} \\
+		+ \sum\limits_{\lambda_{t+1}|\lambda^t}\nu_{t+1}(\lambda^t, \lambda_{t+1})\begin{bmatrix}a_{t+1}(\lambda^t, \lambda_{t+1}) + A_{t+1}(\lambda^{t+1})\end{bmatrix}\end{Bmatrix}\nonumber\\
+		\frac{\partial\mathcal{L}}{\partial c_t(\lambda^t)}& = (c_t(\lambda^t))^{-\gamma} - \eta_t(\lambda^t) = 0 \Longrightarrow \eta_t(\lambda^t) = (c_t(\lambda^t))^{-\gamma}, \qquad\forall t, \forall \lambda^t \\
+		\frac{\partial\mathcal{L}}{\partial a_{t+1}(\lambda^t, \lambda_{t+1})}& = \beta^t\pi_t(\lambda^t|\lambda_0)\left(-\eta_t(\lambda^t)q_{t+1}^t(\lambda^t, \lambda_{t+1}) + \nu_{t+1}(\lambda^t, \lambda_{t+1})\right) + \beta^{t+1}\pi_{t+1}(\lambda^{t+1}|\lambda_0)\eta_{t+1}(\lambda^{t+1}) = 0, \qquad\forall t, \forall\lambda^t, \forall\lambda_{t+1}
+	\end{split}
+\end{equation}
+Since the natural borrowing constraint is designed such that it is suboptimal for a risk-averse consumer to hit the borrowing constraint, the Lagrange multiplier associated with the borrowing constraint must be equal to zero. Then, the FOC with respect to asset positions could be rewritten as
+\begin{equation}
+	(c_t(\lambda^t))^{-\gamma}q_{t+1}^t(\lambda^t, \lambda_{t+1}) = \beta\pi_{t+1}(\lambda_{t+1}|\lambda^t, \lambda_0)(c_{t+1}(\lambda^{t+1}))^{-\gamma}, \qquad\forall t, \forall\lambda^t, \forall\lambda_{t+1} \nonumber
+\end{equation}
+Now, notice that, in equilibrium, goods market clearing condition imposes that $c_t(\lambda^t) = d_t(\lambda^t) = \prod\limits_{s = 1}^t\lambda_sd_0, \forall t, \forall \lambda^t$. Therefore, the pricing kernel is
+\begin{equation}
+	q_{t+1}^t(\lambda^t, \lambda_{t+1}) = \beta\pi_{t+1}(\lambda_{t+1}|\lambda^t, \lambda_0)\left(\frac{c_{t+1}(\lambda^{t+1})}{c_t(\lambda^t)}\right)^{-\gamma} = \beta\pi_{t+1}(\lambda_{t+1}|\lambda^t, \lambda_0)(\lambda_{t+1})^{-\gamma}, \qquad\forall t, \forall\lambda^t, \forall\lambda_{t+1} \nonumber
+\end{equation}
+
+\subsection{Corners}
+
+\subsubsection{}
+Notice that as in last problem set, we have certain endowment stream at all times and histories for one consumer and a deterministic sequence $y_t^2 = (0, \mu\frac{1 + \beta}{\beta}, 0, \mu\frac{1 + \beta}{\beta}, 0, ...)$. Define $q_t^0$ the price of a claim on a unit of consumption at time $t$ valued at time $0$. Then, an Arrow-Debreu competitive equilibrium is allocation $\{c_t^{1*}, c_t^{2*}\}_{t = 0}^{\infty}$ and a price system $\{q_t^0\}_{t = 0}^{\infty}$ such that
+\begin{enumerate}[label = \roman*)]
+	\item allocations are feasible $c_t^{1*} + c_t^{2*} \leq y_t^1 + y_t^2, \forall t\geq0$,
+	\item allocation solves the households' problem, when households take prices as given
+	\begin{equation}
+		\begin{split}
+			\{c_t^{1*}\}_{t = 0}^\infty& = \arg\max\limits_{\{c_t^1\}_{t = 0}^\infty}\sum\limits_{t = 0}^{\infty}\beta^tc_t^1\text{ s.t. }\sum\limits_{t = 0}^{\infty}q_t^0c_t^1\leq\sum\limits_{t = 0}^{\infty}q_t^0\mu \\
+			\{c_t^{2*}\}_{t = 0}^\infty& = \arg\max\limits_{\{c_t^2\}_{t = 0}^\infty}\sum\limits_{t = 0}^{\infty}\beta^t\ln(c_t^2)\text{ s.t. }\sum\limits_{t = 0}^{\infty}q_t^0c_t^2\leq\sum\limits_{t = 0}^{\infty}q_t^0y_t^2\nonumber
+		\end{split}
+	\end{equation}
+\end{enumerate}
+
+\subsubsection{}
+\label{ex8.8b}
+Define Lagrange multipliers for two consumers $\theta_1, \theta_2$, respectively and write out the Lagrangian of both consumers:
+\begin{equation}
+	\begin{split}
+		\mathcal{L}^1& = \sum\limits_{t = 0}^{\infty}\beta^tc_t^1 + \theta_1\sum\limits_{t = 0}^{\infty}q_t^0(\mu - c_t^1) \\
+		\mathcal{L}^2& = \sum\limits_{t = 0}^{\infty}\beta^t\ln(c_t^2) + \theta_2\sum\limits_{t = 0}^{\infty}q_t^0(y_t^2 - c_t^2) \\\nonumber
+		&\begin{matrix}
+			\frac{\partial\mathcal{L}^1}{\partial c_t^1} = \beta^t - \theta_1q_t^0 = 0 & \frac{\partial\mathcal{L}^2}{\partial c_t^2} = \frac{\beta^t}{c_t^2} - \theta_2q_t^0 = 0, \forall t \\
+			\frac{\partial\mathcal{L}^1}{\partial\theta^1} = \sum\limits_{t = 0}^{\infty}q_t^0(\mu - c_t^1) = 0 & \frac{\partial\mathcal{L}^2}{\partial\theta^2} = \sum\limits_{t = 0}^{\infty}q_t^0(y_t^2 - c_t^2) = 0\\
+		\end{matrix}, \qquad\forall t
+	\end{split}
+\end{equation}
+We can express the condition for the price from the FOC and normalize it to be one at time $t = 0$:
+\begin{equation}
+	\begin{split}
+		q_t^0& = \frac{\beta^t}{\theta_1} \\
+		q_0^0& = 1 \Longrightarrow \frac{1}{\theta_1} = 1 \Longrightarrow \theta_1 = 1 \\
+		q_t^0& = \beta^t\nonumber
+	\end{split}
+\end{equation}
+Substitute this back into the FOC of the second household:
+\begin{equation}
+	\frac{\beta^t}{c_t^2} = \theta_2\beta^t \Longrightarrow \frac{1}{c_t^2} = \theta_2, \forall t \nonumber
+\end{equation}
+i.e., consumption of the second household is constant over time. Hence, I could replace $c_t^2$ by $\bar{c}^2$ everywhere. Consider now the budget constraint of the second household:
+\begin{equation}
+	\begin{split}
+		&\sum\limits_{t = 0}^{\infty}\beta^t\bar{c}^2 = \sum\limits_{t = 0}^{\infty}\beta^ty_t^2 \nonumber
+	\end{split}
+\end{equation}
+The left-hand side could be simplified as $\bar{c}^2\sum\limits_{t = 0}^{\infty}\beta^t = \frac{\bar{c}^2}{1 - \beta}$. For the right-hand side, notice that $\sum\limits_{t = 0}^{\infty}\beta^ty_t^2 = 0 + \beta\alpha + 0 + \beta^3\alpha + 0 + \beta^5\alpha + ... = \frac{\alpha\beta}{1 - \beta^2} = \frac{\mu}{1 - \beta}$. Therefore,
+\begin{equation}
+	\begin{split}
+	\frac{\bar{c}^2}{1 - \beta}& = \frac{\mu}{1 - \beta} \\\nonumber
+	\bar{c}^2& = \mu
+	\end{split}
+\end{equation}
+From the aggregate resource constraint:
+\begin{equation}
+	\begin{split}
+		c_t^1 + \bar{c}^2& = \mu + y_t^2, \qquad\forall t \\ \nonumber
+		c_t^1 + \cancel{\mu}& = \cancel{\mu} + y_t^2, \qquad\forall t  \\
+		c_t^1& = y_t^2, \qquad\forall t 
+	\end{split}
+\end{equation}
+Using no-arbitrage argument, the one-period gross interest rate should be equal to the inverse ratio of prices for period $t$ and $t+1$ consumption claims, i.e., $\frac{q_{t}^0}{q_{t+1}^0} = \frac{\beta^{t}}{\beta^{t+1}} = \frac{1}{\beta}$.
+
+\subsubsection{}
+
+The value of total endowment stream of consumer 1 is
+\begin{equation}
+	\sum\limits_{t = 0}^\infty q_t^0y_t^1 = \sum\limits_{t = 0}^\infty\beta^t\mu = \frac{\mu}{1 - \beta} \nonumber
+\end{equation}
+and of consumer 2
+\begin{equation}
+	\sum\limits_{t = 0}^\infty q_t^0y_t^2 = \sum\limits_{t = 0}^\infty\beta^ty_t^2 = \mu\frac{1+\beta}{\beta}\sum\limits_{j = 0}^\infty\beta^{2j + 1} = \mu\frac{1+\beta}{\cancel{\beta}}\frac{\cancel{\beta}}{1 - \beta^2} = \frac{\mu}{1 - \beta} \nonumber
+\end{equation}
+
+\subsubsection{}
+
+I assume that there was a slight typo in the problem and that the endowment stream of the first consumer continues to be \textbf{\boldmath$\mu > 0$}, instead of one, each period. Define $\gamma_t^i$ the Lagrange multiplier associated with the non-negativity constraint for consumer $i$. Then, we have the following set of FOCs:
+
+\begin{equation}
+	\begin{aligned}[c]
+		&\beta^t - \theta_1q_t^0 + \gamma_t^1 = 0 \\
+		&\min\{\theta_1, \sum\limits_{t = 0}^\infty q_t^0(\mu - c_t^1)\} = 0\\
+		&\min\{\gamma_t^1, c_t^1\} = 0 \nonumber
+	\end{aligned}\qquad
+	\begin{aligned}[c]
+		&\frac{\beta^t}{c_t^2} - \theta_2q_t^0 + \gamma_t^2 = 0 \\
+		&\min\{\theta_2, \sum\limits_{t = 0}^\infty q_t^0(y_t^2 - c_t^2)\} = 0 \\
+		&\min\{\gamma_t^2, c_t^2\} = 0
+	\end{aligned}
+\end{equation}
+
+If we disregard non-negativity constraint and proceed as previous, then we would arrive at a solution such that $c_t^1 = \mu - \frac{\alpha\beta}{1 + \beta} + y_t^2, \forall t$. But when $t$ is even, it implies that $c_t^1 < 0$. Setting $c_t^1 = 0, \forall t$ is not optimal either (it would imply that $\theta_1 = 0$ and $\gamma_t^1 < 0$, violating Kuhn-Tucker conditions). Therefore, it must be that $c_t^1 = 0$ when $t$ is even and $c_t^1 > 0$ when t is odd. Then, $\gamma_t^1\geq0$ when $t$ is even and $\gamma_t^1 = 0$ when $t$ is odd. Since the second consumer is risk-averse and wants to smooth out consumption over time, non-negativity constraint remains unbinding, i.e., $\gamma_t^2 = 0, \forall t$. So, we could normalize price at $q_1^0 = 1$:
+\begin{equation}
+	\begin{split}
+		\beta - \theta_1q_1^0 + \cancelto{0}{\gamma_1^1} = 0 \\ \nonumber
+		\theta_1 = \beta \\
+		q_t^0 = \beta^{t-1},  \qquad\forall t\text{ odd}
+	\end{split}
+\end{equation}
+For $t$ odd, the ratio of two consumers' FOCs are
+\begin{equation}
+	c_t^2 = \frac{\theta_1}{\theta_2} = \frac{\beta}{\theta_2} \nonumber
+\end{equation}
+From the resource constraint we also have that 
+\begin{equation}
+	\begin{split}
+		c_t^1 + \frac{\beta}{\theta_2} = \mu + \alpha \\ \nonumber
+		c_t^1 = \mu + \alpha - \frac{\beta}{\theta_2}
+	\end{split}
+\end{equation}
+For all $t$ even, from the resource constraint we get $c_t^2 = \mu$. Therefore, $\frac{\beta^t}{\mu} = \theta_2q_t^0 \Longrightarrow q_t^0 = \frac{\beta^t}{\mu\theta_2}$.
+Substitute these results into the budget constraint of the first consumer:
+\begin{equation}
+	\begin{split}
+		 \sum\limits_{t = 0}^\infty q_t^0\mu& = \sum\limits_{t = 0}^\infty q_t^0c_t^1 \\ \nonumber
+		 \mu\sum\limits_{t\text{ is even}} \frac{\beta^t}{\mu\theta_2} + \mu\sum\limits_{t\text{ is odd}}\beta^{t-1}& = \cancel{\sum\limits_{t\text{ is even}} \frac{\beta^t}{\mu\theta_2}0} + \sum\limits_{t\text{ is odd}}\beta^{t-1}(\mu + \alpha - \frac{\beta}{\theta_2}) \\
+		 (\frac{1}{\theta_2} + \mu)(1 + \beta^2 + \beta^4 + ...)& = (\mu + \alpha - \frac{\beta}{\theta_2})(1 + \beta^2 + \beta^4 + ...) \\
+		 \frac{1}{\theta_2} + \cancel{\mu}& = \cancel{\mu} + \alpha - \frac{\beta}{\theta_2} \\
+		 \frac{1 + \beta}{\alpha}& = \theta_2
+	\end{split}
+\end{equation}
+Therefore,
+\begin{equation}
+	\begin{split}
+	c_t^1 = \begin{cases}
+	0 & \forall t\text{ even} \\
+	\mu + \frac{\alpha}{1 + \beta} & \forall t\text{ odd}
+	\end{cases}, \quad c_t^2 = \begin{cases}
+	\frac{\alpha\beta}{1 + \beta} & \forall t\text{ even} \\
+	\mu & \forall t\text{ odd} \\
+	\end{cases}, \quad q_t^0 = \begin{cases}
+	\frac{\alpha\beta^t}{\mu(1 + \beta)} & \forall t\text{ even} \\
+	\beta^{t-1} & \forall t\text{ odd}
+	\end{cases}\nonumber
+	\end{split}
+\end{equation}
+
+\subsubsection{}
+
+The one period gross interest rates will now differ across time. When $t$ is odd:
+\begin{equation}
+	\begin{split}
+		\frac{q_{t}^0}{q_{t+1}^0} = \frac{\beta^{t-1}\mu(1 + \beta)}{\alpha\beta^{t+1}} = \frac{\mu(1 + \beta)}{\alpha\beta^{2}} \nonumber
+	\end{split}
+\end{equation}
+Since $\alpha > \mu(1 + \frac{1}{\beta}) = \mu\frac{1 + \beta}{\beta}$,
+\begin{equation}
+	\frac{\mu(1 + \beta)}{\alpha\beta}\frac{1}{\beta} < \frac{\mu(1 + \beta)\beta}{\mu(1 + \beta)\beta}\frac{1}{\beta} = \frac{1}{\beta} \nonumber
+\end{equation}
+i.e., the gross interest rate when moving from odd period to an even period is smaller than the one computed in \cref{ex8.8b}.
+When $t$ is even:
+\begin{equation}
+\begin{split}
+\frac{q_{t}^0}{q_{t+1}^0} = \frac{\alpha\cancel{\beta^t}}{\mu(1 + \beta)\cancel{\beta^t}} = \frac{\alpha}{\mu(1 + \beta)} > \frac{\cancel{\mu(1 + \beta)}}{\beta\cancel{\mu(1 + \beta)}} = \frac{1}{\beta} \nonumber
+\end{split}
+\end{equation}
+the one-period gross interest rate, on the other contrary, is larger than the one previously computed.
+ 
+\subsection{LQDP 1}
+
+\subsubsection{}
+The maximization problem in recursive form:
+\begin{equation}
+	V(x) = \max\limits_{u}\{-x'Rx - u'Qu - 2u'Hx + \beta V(Ax + Bu)\} \nonumber
+\end{equation}
+Guess: $V(x) = -x'Px$, where $P$ is symmetric. Then,
+\begin{equation}
+	\begin{split}
+		V(x)& = \max\limits_{u}\{-x'Rx - u'Qu - 2u'Hx + \beta V(Ax + Bu)\} \\ \nonumber 
+		& = \max\limits_{u}\{-x'Rx - u'Qu - 2u'Hx - \beta(Ax + Bu)'P(Ax + Bu)\} \\
+		& = \max\limits_{u}\{-x'Rx - u'Qu - 2u'Hx - \beta(x'A'PAx + x'A'PBu + u'B'PAx + u'B'PBu)\}\\
+		\text{FOC: }& -(Q + Q')u - 2Hx - \beta(B'P'Ax + B'PAx + (B'PB + B'P'B)u) = 0 \\
+		& 2Qu + 2Hx + \beta(2B'PAx + 2B'PBu) = 0 \\
+		& (Q + \beta B'PB)u + (H + \beta B'PA)x = 0 \\
+		& u = -(Q + \beta B'PB)^{-1}(H + \beta B'PA)x \equiv -Fx
+	\end{split}
+\end{equation}
+Substitute back into value function
+\begin{equation}
+	\begin{split}
+	x'Px& = x'Rx + x'F'QFx - 2x'F'Hx + \beta(Ax - BFx)'P(Ax - BFx) \\ \nonumber
+	& = x'Rx + x'F'QFx - 2x'F'Hx + \beta x'(A - BF)'P(A - BF)x \\
+	& = x'(R + F'QF - 2F'H + \beta(A - BF)'P(A - BF))x \Longrightarrow \\
+	P& = R + F'QF - 2F'H + \beta(A - BF)'P(A - BF) \\
+	& = R + F'QF - 2F'H + \beta A'PA - \beta F'B'PA  - \beta A' PBF + \beta F'B'PBF\\
+	& = R + F'(Q + \beta B'PB)F - 2F'H + \beta A'PA - \beta F'B'PA  - \beta A' PBF \\
+	& = R + (H' + \beta A'PB)F - 2F'H + \beta A'PA - \beta F'B'PA  - \beta A' PBF \\
+	& = R + H'F - 2F'H + \beta A'PA - \beta F'B'PA \\
+	& = R + \beta A'PA + H'F - F'H - F'(H + \beta B'PA) \\
+	& = R + \beta A'PA + H'(Q + \beta B'PB)^{-1}(H + \beta B'PA) - (H' + \beta A'PB)(Q + \beta B'PB)^{-1}H - \\
+	& - (H' + \beta A'PB)(Q + \beta B'PB)^{-1}(H + \beta B'PA) \\
+	& = R + \beta A'PA  + \beta H'(Q + \beta B'PB)^{-1}B'PA - \beta A'PB(Q + \beta B'PB)^{-1}H - (H' + \beta A'PB)(Q + \beta B'PB)^{-1}(H + \beta B'PA)
+	\end{split}
+\end{equation}
+Since $P$ should be symmetric, 
+\begin{equation}
+	\begin{split}
+		\beta H'(Q + \beta B'PB)^{-1}B'PA - \beta A'PB(Q + \beta B'PB)^{-1}H& = \beta A'PB(Q + \beta B'PB)^{-1}H - \beta H'(Q + \beta B'PB)^{-1}B'PA \\ \nonumber
+		2\beta H'(Q + \beta B'PB)^{-1}B'PA& = 2\beta A'PB(Q + \beta B'PB)^{-1}H \\
+		\beta H'(Q + \beta B'PB)^{-1}B'PA& = \beta A'PB(Q + \beta B'PB)^{-1}H
+	\end{split}
+\end{equation}
+Therefore, final expression for $P$:
+\begin{equation}
+	P = R + \beta A'PA - (H' + \beta A'PB)(Q + \beta B'PB)^{-1}(H + \beta B'PA) \nonumber
+\end{equation}
+
+\subsubsection{}
+
+I do not understand this exercise. We are not given any values for the matrices $A, H, B, Q, R$ and $\beta$. If one were given these matrices, the algorithm would be
+
+\begin{verbatim}
+	n = size(R, 1); 	% Size of matrix R
+	P0 = zeros(n, n); 	% Initial guess for P
+	error = 1;  		% Intialize the error
+	tolv = 10^-5; 		% tolerance value
+	
+	while error > tolv
+	P1 = R + beta*A'*P*A - (H' + beta*A'*P*B)*(Q + beta*B'*P*B)^{-1}*(H + beta*B'*P*A);
+	error = abs(max(max(P1 - P0)));
+	P0 = P1;
+	end
+\end{verbatim}
+
+\subsection{LQDP2}
+\subsubsection{}
+
+First of all, substitute $c_t = ra_t + y_t - i_t$ into the objective function:
+\begin{equation}
+	(c_t - b)^2 + \gamma i_t^2 = r^2a_t^2 + y_t^2 + (1 + \gamma)i_t^2 + b^2 + 2ra_ty_t - 2ra_ti_t - 2bra_t - 2y_ti_t - 2by_t + 2bi_t \nonumber
+\end{equation}
+Define the vector of control variables $u_t = (i_t, 1)$ and the vector of state variables $x_t = (a_t, y_t, y_{t-1})$. Define matrices $R = \begin{bmatrix}r^2 & r & 0 \\ r & 1 & 0 \\ 0 & 0 & 0\end{bmatrix}$; $Q = \begin{bmatrix} 1 + \gamma & b \\ b & b^2 \end{bmatrix}$; $H = \begin{bmatrix}-r & -1 & 0 \\ -br & -b & 0\end{bmatrix}$; $A = \begin{bmatrix}1 & 0 & 0 \\ 0 & \rho_1 & \rho_2 \\ 0 & 1 & 0\end{bmatrix}$ and $B = \begin{bmatrix} 1 & 0 \\ 0 & 0 \\ 0 & 0\end{bmatrix}$. Then, the maximization problem could be written as
+\begin{equation}
+	\begin{split}
+		&\max\limits_{i_t} -\sum\limits_{t = 0}^\infty\beta^t(x_t'Rx_t + u_t'Qu_t + 2u_t'Hx_t)\text{ s.t. }x_{t+1} = Ax_t + Bu_t \nonumber
+		\intertext{Check:}
+		x_t'Rx_t& = \begin{bmatrix}a_t & y_t & y_{t-1}\end{bmatrix}\begin{bmatrix}r^2 & r & 0 \\ r & 1 & 0 \\ 0 & 0 & 0\end{bmatrix}\begin{bmatrix}a_t \\ y_t \\ y_{t-1}\end{bmatrix} = \begin{bmatrix}a_tr^2 + y_tr & a_tr + y_t & 0\end{bmatrix}\begin{bmatrix}a_t \\ y_t \\ y_{t-1}\end{bmatrix} = \begin{bmatrix}a_t^2r^2 + 2ra_ty_t + y_t^2\end{bmatrix} \\
+		u_t'Qu_t& = \begin{bmatrix}i_t & 1\end{bmatrix}\begin{bmatrix} 1 + \gamma & b \\ b & b^2 \end{bmatrix}\begin{bmatrix}i_t \\ 1\end{bmatrix} = \begin{bmatrix}(1+\gamma)i_t + b & bi_t + b^2\end{bmatrix}\begin{bmatrix}i_t \\ 1\end{bmatrix} = \begin{bmatrix}(1+\gamma)i_t^2 + 2bi_t + b^2\end{bmatrix} \\
+		u_t'Hx_t& = \begin{bmatrix}i_t & 1\end{bmatrix}\begin{bmatrix}-r & -1 & 0 \\ -br & -b & 0\end{bmatrix}\begin{bmatrix}a_t \\ y_t \\ y_{t-1}\end{bmatrix} = \begin{bmatrix}-ri_t - br & -i_t - b & 0\end{bmatrix}\begin{bmatrix}a_t \\ y_t \\ y_{t-1}\end{bmatrix} = -ra_ti_t - bra_t - i_ty_t - by_t\\
+		\Rightarrow &x_t'Rx_t + u_t'Qu_t + 2u_t'Hx_t = a_t^2r^2 + 2ra_ty_t + y_t^2 + (1+\gamma)i_t^2 + 2bi_t + b^2 - 2ra_ti_t - 2bra_t - 2i_ty_t - 2by_t\checkmark \\
+		Ax_t + Bu_t& = \begin{bmatrix}1 & 0 & 0 \\ 0 & \rho_1 & \rho_2 \\ 0 & 1 & 0\end{bmatrix}\begin{bmatrix}a_t \\ y_t \\ y_{t-1}\end{bmatrix} + \begin{bmatrix} 1 & 0 \\ 0 & 0 \\ 0 & 0\end{bmatrix}\begin{bmatrix}u_t \\ 1\end{bmatrix} = \begin{bmatrix}a_t \\ \rho_1y_t + \rho_2y_{t-1} \\ y_t\end{bmatrix} + \begin{bmatrix}u_t \\ 0 \\ 0 \end{bmatrix} = \begin{bmatrix}a_t + u_t \\ \rho_1y_t + \rho_2y_{t-1} \\ y_t \end{bmatrix} = \begin{bmatrix}a_{t+1} \\ y_{t+1} \\ y_t\end{bmatrix} = x_{t+1}\checkmark
+	\end{split}
+\end{equation}
+
+Second way:
+
+\begin{equation}
+	\begin{split}
+		\max\limits_{c_t}-\sum\limits_{t = 0}^\infty\beta^t\begin{bmatrix}(1 + \gamma)c_t^2 + 2bc_t + b^2 + \gamma r^2a_t^2 + \gamma y_t^2 + 2\gamma r a_ty_{t} - 2\gamma r a_tc_t - 2\gamma y_tc_t\end{bmatrix} \nonumber \\
+		u_t = c_t; \qquad x_t = \begin{bmatrix}a_t & y_t & y_{t-1} & 1 \end{bmatrix}'\\
+		x_t'Rx_t = r_{11}a_t^2 + 2r_{21}a_ty_t + 2r_{31}a_ty_{t-1} + 2r_{41}a_t + r_{22}y_t^2 + 2r_{32}y_ty_{t-1} + 2r_{42}y_t + r_{33}y_{t-1}^2 + 2r_{43}y_{t-1} + r_{44}\\
+		u_t'Qu_t = Qc_t^2\\
+		2u_t'Hx_t = 2h_1c_ta_t + 2h_2c_ty_t + 2h_3c_ty_{t-1} + 2h_4c_t\\
+		x_t'Rx_t + u_t'Qu_t + 2u_t'Hx_t = r_{11}a_t^2 + 2r_{21}a_ty_t + 2r_{31}a_ty_{t-1} + 2r_{41}a_t + r_{22}y_t^2 + 2r_{32}y_ty_{t-1} + 2r_{42}y_t + r_{33}y_{t-1}^2 + 2r_{43}y_{t-1} + r_{44} + Qc_t^2\\ + 2h_1c_ta_t + 2h_2c_ty_t + 2h_3c_ty_{t-1} + 2h_4c_t\\
+		Q = 1 + \gamma; \qquad h_4 = b; \qquad r_{44} = b^2; \qquad r_{11} = \gamma r^2; \qquad r_{22} = \gamma; \qquad r_{21} = \gamma r; \qquad h_1 = -\gamma r; \qquad h_2 = -\gamma \\
+		R = \begin{bmatrix}\gamma r^2 & \gamma r & 0 & 0 \\ \gamma r & \gamma & 0 & 0 \\ 0 & 0 & 0 & 0 \\ 0 & 0 & 0 & b^2\end{bmatrix}; \qquad Q = 1 + \gamma; \qquad H = \begin{bmatrix}-\gamma r & -\gamma & 0 & b\end{bmatrix}; \qquad A = \begin{bmatrix}1 + r & 1 & 0 & 0 \\ 0 & \rho_1 & \rho_2 & 0 \\ 0 & 1 & 0 & 0 \\ 0 & 0 & 0 & 1 \end{bmatrix}; \qquad B = \begin{bmatrix}-1 \\ 0 \\ 0 \\ 0\end{bmatrix}
+	\end{split}
+\end{equation}
+
+\subsubsection{}
+
+\end{document}

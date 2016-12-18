@@ -1,0 +1,289 @@
+\documentclass[]{article}
+\usepackage{amsmath, amsfonts}
+\usepackage[inline]{enumitem}
+\usepackage{fancyhdr}
+\usepackage{geometry}
+\usepackage{cancel}
+\usepackage{graphicx}
+\usepackage{color}
+\usepackage{subcaption}
+\usepackage{cleveref}
+\usepackage{MnSymbol,wasysym}
+\usepackage{titlesec}
+
+%opening
+\title{Problem Set III \\ \large Macroeconomics I}
+\author{Nurfatima Jandarova}
+\date{\today}
+\pagestyle{fancy}
+
+\lhead{Macroeconomics I, Problem Set III}
+\rhead{Nurfatima Jandarova}
+\renewcommand{\headrulewidth}{0.4pt}
+\fancyheadoffset{1 cm}
+
+\geometry{a4paper, left=20mm, top=20mm, bottom = 20mm, headheight=20mm}
+
+\sloppy
+\definecolor{lightgray}{gray}{0.5}
+\setlength{\parindent}{0pt}
+
+\renewcommand{\thesubsection}{Exercise \arabic{subsection}}
+\renewcommand{\thesubsubsection}{\textit{\arabic{subsection}.\arabic{subsubsection}}}
+\titleformat{\subsubsection}[runin]
+{\normalfont\normalsize}{\thesubsubsection}{1em}{}
+
+
+\begin{document}
+
+\maketitle
+
+\subsection{Kalman filter: IQ}
+
+\subsubsection{}
+Recall that in general form, we have the following system of equations for states and signals:
+\begin{equation}
+\begin{cases}
+x_{t+1} = A_0x_t + Cw_{t+1}, &\forall t \\
+y_t = Gx_{t} + v_t, &\forall t
+\end{cases}\nonumber
+\end{equation}
+where $w_{t+1}\sim\text{iid }\mathcal{N}(0, I)$ and $v_{t}\sim\text{iid }\mathcal{N}(0, R)$. Hence, in our case,$x_{t+1} = x_{t} = \theta$, $A_0 = 1$, $C = 0$, $G = 1$ and $R = 100$.
+
+As derived in class, we know that
+
+\begin{align}
+a_t& = y_t - G\hat{x}_t \label{KF1}\\
+K_t& = A_0\Sigma_tG'(G\Sigma_tG' + R)^{-1}\label{KF2} \\
+\hat{x}_{t+1}& = A_0\hat{x}_t + K_ta_t \label{KF3}	\\
+\Sigma_{t+1}& = CC' + K_tRK_t' + (A_0 - K_tG)\Sigma_t(A_0 - K_tG)' \label{KF4}
+\end{align}
+
+where $\hat{x}_t = \mathbb{E}(x_t|y_{t-1}, ..., y_0)$. Notice that in this case, $IQ_{t+1} = \hat{x}_{t+1}$. Substituting the parameters in \eqref{KF2} and \eqref{KF3} we get:
+\begin{equation}
+\begin{split}
+K_t& = \frac{\Sigma_t}{\Sigma_t + 100} \\\nonumber
+IQ_{t+1}& = IQ_{t} + \frac{\Sigma_t}{\Sigma_t + 100}(y_t - IQ_t) = IQ_{t}(1 - \frac{\Sigma_t}{\Sigma_t + 100}) + \frac{\Sigma_t}{\Sigma_t + 100}y_t = IQ_t\frac{100}{\Sigma_t + 100} + \frac{\Sigma_t}{\Sigma_t + 100}y_t
+\end{split}
+\end{equation}
+I don't know how to obtain the unconditional expectation of $\Sigma_t$, but I can provide you the conditional one we derived in class \smiley{}\\
+$\mathbb{E}((IQ_t - \theta)^2|y_{t-1}, ..., y_0) = \Sigma_t$. Plugging in the parameters in \eqref{KF4} we can get a recursive expression for $\Sigma_{t+1}$:
+\begin{equation}
+\Sigma_{t+1} = \begin{pmatrix}\frac{\Sigma_t}{\Sigma_t + 100}\end{pmatrix}^2100 + \begin{pmatrix}1 - \frac{\Sigma_t}{\Sigma_t + 100}\end{pmatrix}^2\Sigma_t = \frac{100\Sigma_t}{\Sigma_t + 100} \nonumber
+\end{equation}
+	
+\subsubsection{}
+See matlab code and \Cref{fig:kalmaniq} for two random draws. As will be seen from \ref{1.3}, the weight assigned to actual test score decreases as $t$ increases. Thus, the previous guesses receive relatively more weight as time progresses, hence, IQ series become smoother with time.
+\begin{figure}[h]
+	\begin{subfigure}{0.5\textwidth}
+		\centering
+		\includegraphics[width=0.9\linewidth]{kalmaniq.eps}
+		\caption{Simulation of Kalman Filter applied to test scores and IQ}
+		\label{fig:kalmaniq}
+	\end{subfigure}%
+	\begin{subfigure}{0.5\textwidth}
+		\centering
+		\includegraphics[width = 0.9\linewidth]{observedgdp.eps}
+		\caption{Observed annual GDP growth rate}
+		\label{fig:observedgdp}
+	\end{subfigure}
+\end{figure}
+
+
+\subsubsection{}\label{1.3}
+
+From part a) of this exercise we know that $\Sigma_{t+1} = \frac{100\Sigma_t}{\Sigma_t + 100}$. Suppose $t = 0$ and note that by assumption of the problem $\theta\sim\mathcal{N}(100, 10)$. Then, $\Sigma_{1} = \frac{100\Sigma_0}{\Sigma_0 + 100}$. Iterating for $t=\{1, 2\}$, we get
+\begin{equation}
+\begin{split}
+	\Sigma_{2}& = \frac{100\Sigma_1}{\Sigma_1 + 100} = 100\frac{\frac{100\Sigma_0}{\Sigma_0 + 100}}{\frac{100\Sigma_0}{\Sigma_0 + 100} + 100} = 100\frac{\Sigma_0\cancel{(\Sigma_0 + 100)}}{\cancel{(\Sigma_0 + 100)}(2\Sigma_0 + 100)} = 100\frac{\Sigma_0}{2\Sigma_0 + 100}\\\nonumber
+	\Sigma_{3}& = \frac{100\Sigma_2}{\Sigma_2 + 100} = 100\frac{100\frac{\Sigma_0}{2\Sigma_0 + 100}}{100\frac{\Sigma_0}{2\Sigma_0 + 100} + 100} = 100\frac{\Sigma_0\cancel{(2\Sigma_0 + 100)}}{\cancel{(2\Sigma_0 + 100)}(3\Sigma_0 + 100)} = 100\frac{\Sigma_0}{3\Sigma_0 + 100} \\
+	\text{Hence, }\Sigma_{t+1}& = 100\frac{\Sigma_0}{(t+1)\Sigma_0 + 100}\\
+	\text{Therefore, }\lim\limits_{t\to\infty}\Sigma_t& = \lim\limits_{t\to\infty}100\frac{\Sigma_0}{t\Sigma_0 + 100} = \lim\limits_{t\to\infty}\frac{1000}{10t + 100} = 0
+\end{split}
+\end{equation}
+
+\subsection{Kalman filter: GDP growth}
+\subsubsection{}
+
+The observed annual growth rate of US GDP is presented in \Cref{fig:observedgdp}.
+
+\subsubsection{}
+	
+Again using the general formulas derived in class, it is possible to show that
+\begin{align}
+	a_t& = y_t - \mathbb{E}(\mu_t|y^{t-1}) \label{GDP1}\\
+	K_t& = \frac{\Sigma_t}{\Sigma_t + \sigma_\varepsilon^2} \label{GDP2}\\
+	\mathbb{E}(\mu_{t+1}|y^t)& = \mathbb{E}(\mu_t|y^{t-1}) + \frac{\Sigma_t}{\Sigma_t + \sigma_\varepsilon^2}(y_t - \mathbb{E}(\mu_t|y^{t-1})) = \frac{\sigma_\varepsilon^2}{\Sigma_t + \sigma_\varepsilon^2}\mathbb{E}(\mu_t|y^{t-1}) + \frac{\Sigma_t}{\Sigma_t + \sigma_\varepsilon^2}y_t \label{GDP3}\\
+	\Sigma_{t+1}& = \sigma_\nu^2 + \begin{pmatrix}\frac{\Sigma_t}{\Sigma_t + \sigma_\varepsilon^2}\end{pmatrix}^2\sigma_\varepsilon^2 + \begin{pmatrix}\frac{\sigma_\varepsilon^2}{\Sigma_t + \sigma_\varepsilon^2}\end{pmatrix}^2\Sigma_t = \sigma_\nu^2 + \frac{\sigma_\varepsilon^2\Sigma_t}{\Sigma_t + \sigma_\varepsilon^2} \label{GDP4}
+\end{align}
+
+Using this information and plugging in the parameters in the problem we get the following charts in case \begin{enumerate*}
+	\item $\sigma_\varepsilon^2 = \sigma_\nu^2 = 0.01$, 
+	\item $\sigma_\varepsilon^2 = 0.0001, \sigma_\nu^2 = 0.01$, and 
+	\item $\sigma_\varepsilon^2 = 0.01, \sigma_\nu^2 = 0.0001$.
+\end{enumerate*}
+\begin{figure}[h]
+	\centering
+	\includegraphics[width = 0.7\textwidth]{kalmangdp.eps}
+\end{figure}
+
+From equation \eqref{GDP3} it is possible to see that when $\sigma_\varepsilon^2 = 0.0001, \sigma_\nu^2 = 0.01$, we assign a higher weight to observed signal variable from the previous period and lower weight to a previous guess. Hence, not surprisingly at all, yellow line very much resembles the dynamics of the actual GDP growth lagged by one period (yellow line). Then, in the first case when $\sigma_\varepsilon^2 = \sigma_\nu^2 = 0.01$, it is equivalent to assigning slightly higher weight to a previous guess of an unobserved long-run GDP growth. Hence, an updated guess of the state variable should be smoother, which is exactly what we observed in the chart (red line). Finally, when $\sigma_\varepsilon^2 = 0.01, \sigma_\nu^2 = 0.0001$, we assign a very small weight to an actual GDP growth and a higher weight to our previous guess of the state variable. Hence, it makes the series of our guesses much smoother over time, exactly what is depicted by a purple line in the chart above.
+
+\subsection{An exchange economy: deterministic}
+\subsubsection{}\label{ex3.1}
+Define $\lambda_1, \lambda_2$ as Pareto weights assigned to the two consumers in our economy. Then, the social planner's objective is to
+\begin{equation}
+	\begin{split}
+		\max\limits_{\{c_t^1, c_t^2\}_{t = 0}^{\infty}}&\sum\limits_{t = 0}^{\infty}\beta^t(\lambda_1u(c_t^1) + \lambda_2u(c_t^2))\text{ s.t. }c_t^1 + c_t^2 \leq y_t^1 + y_t^2 = 1, \forall t\geq 0\\\nonumber
+		\mathcal{L} = &\sum\limits_{t = 0}^{\infty}\beta^t(\lambda_1u(c_t^1) + \lambda_2u(c_t^2) + \theta_t(1 - c_t^1 - c_t^2))\\
+		&\begin{matrix}
+		\frac{\partial\mathcal{L}}{\partial c_t^1} = & \lambda_1u_c(c_t^1) - \theta_t = 0, \forall t\\ \\
+		\frac{\partial\mathcal{L}}{\partial c_t^2} = & \lambda_2u_c(c_t^2) - \theta_t = 0, \forall t
+		\end{matrix} \Longrightarrow \frac{u_c(c_t^1)}{u_c(c_t^2)} = \frac{\lambda_2}{\lambda_1}, \forall t\\
+	\end{split}
+\end{equation}
+Hence, the optimal allocation is characterized by $\frac{u_c(c_t^1)}{u_c(c_t^2)} = \frac{\lambda_2}{\lambda_1}$, which is a function of Pareto weights only.
+Next, we could normalize $\lambda_1 = 1$ and rewrite the ratio of marginal utilities as
+\begin{equation}
+	\begin{split}
+		u_c(c_t^1)& = \lambda_2u_c(c_t^2) \Longrightarrow \\ \nonumber
+		&\begin{matrix}
+		c_t^1 =& u_c^{-1}(\lambda_2u_c(c_t^2)) \\
+		1 =& u_c^{-1}(\lambda_2u_c(c_t^2)) + c_t^2
+		\end{matrix}
+		, \forall t
+	\end{split}
+\end{equation}
+
+We see from here that not only the ratio of marginal utilities across households constant over time, but the consumption levels of each households only depend on the total endowment of the good, which is constant through time. Therefore, consumption levels of both households are constant over time.
+
+\subsubsection{}
+As defined in class, an Arrow-Debreu competitive equilibrium is a feasible allocation $\{c_t^{1*}, c_t^{2*}\}_{t = 0}^{\infty}$ and a price system $\{q_t^0\}_{t = 0}^{\infty}$ such that allocation solves the households' problem, when households take prices as give, i.e.,
+\begin{enumerate}[label = \roman*)]
+	\item $c_t^{1*} + c_t^{2*} \leq 1, \forall t\geq1$,
+	\item $\{c_t^{i*}\}_{t = 0}^\infty = \arg\max\limits_{\{c_t^i\}_{t = 0}^\infty}\sum\limits_{t = 0}^{\infty}\beta^tu(c_t^i)$ s.t. $\sum\limits_{t = 0}^{\infty}q_t^0c_t^i\leq\sum\limits_{t = 0}^{\infty}q_t^0y_t^i, \forall i\in\{1, 2\}$
+\end{enumerate}
+
+Since $u$ is increasing function, the budget constraint is binding. Define a Lagrange multiplier as $\theta_i$:
+\begin{equation}
+	\begin{split}
+		\mathcal{L}^i& = \sum\limits_{t = 0}^\infty\beta^tu(c_t^i) + \theta_i\sum\limits_{t = 0}^{\infty}q_t^0(y_t^i - c_t^i), \forall i\in\{1, 2\}\\\nonumber
+		\frac{\partial\mathcal{L}^i}{\partial c_t^i}& = \beta^tu_c(c_t^i) - \theta_iq_t^0 = 0, \forall t\geq1, \forall i\in\{1, 2\}
+	\end{split}
+\end{equation}
+We could apply Negishi algorithm to find $q_t^0$ and substitute into the budget constraint
+\begin{equation}
+	\begin{split}
+		\cancelto{1}{\lambda_1^{-1}}q_t^0& = \beta^tu_c(c_t^1)\\ \nonumber
+		\sum\limits_{t = 0}^{\infty}\beta^t&u_c(c_t^1)(y_t^1 - c_t^1) = 0
+	\end{split}
+\end{equation}
+From exercise \ref{ex3.1}, we know that allocations only depend on aggregate endowment at time $t$. By the specification of the problem, we know that the aggreaget endowment at any time is equal to $1$. Hence, consumption of both households is constant over time as well.
+\begin{equation}
+	\begin{split}
+		\sum\limits_{t = 0}^{\infty}\beta^ty_t^1& = c_t^1\sum\limits_{t = 0}^{\infty}\beta^t \Longrightarrow
+		\sum\limits_{t = 0}^{\infty}\beta^ty_t^1 = \frac{c_t^1}{1 - \beta} \nonumber
+	\end{split}
+\end{equation}
+Since we are given a sequence $y_t^1 = 1, 0, 0, 1, 0, 0, 1, ...$, hence, $\sum\limits_{t = 0}^{\infty}\beta^ty_t^1 = \beta^0 + \beta^3 + \beta^6 + ... = \sum\limits_{t = 0}^\infty\beta^{3t} = \frac{1}{1 - \beta^3}$, we can simplify the above expression further:
+\begin{equation}
+	\begin{split}
+		\frac{1}{1 - \beta^3}& = \frac{c_t^1}{1 - \beta} \Longrightarrow		c_t^1 = \frac{1}{1 + \beta + \beta^2} \Longrightarrow c_t^2 = \frac{\beta + \beta^2}{1 + \beta + \beta^2} \nonumber
+	\end{split}
+\end{equation}
+In the end, we found that the competitive equilibrium (CE) allocations are $c_t^1 = \frac{1}{1 + \beta + \beta^2}, c_t^2 = \frac{\beta + \beta^2}{1 + \beta + \beta^2}$ and CE price is $q_t^0 = \beta^tu_c(\frac{1}{1 + \beta + \beta^2})$. Notice further that we could normalize price of the asset at time $0$ to be equal to one. Then,
+\begin{equation}
+	\begin{split}
+		q_0^0& = 1 = u_c(\frac{1}{1 + \beta + \beta^2}) \Longrightarrow q_t^0 = \beta^t \nonumber
+	\end{split}
+\end{equation}
+
+\subsubsection{}
+Let $\{d_t\}_{t = 0}^\infty = \{0.05\}_{t = 0}^\infty$ be a stream of claims on time $t$ consumption. Since the market have already priced in history-contingent assets for all possible states and time, this asset is redundant. To rule out the arbitrage opportunities Then,
+\begin{equation}
+	\begin{split}
+		p_0^0& = \sum\limits_{t = 0}^\infty 0.05q_t^0 = \frac{0.05u_c(\frac{1}{1 + \beta + \beta^2})}{1 - \beta} \nonumber \text{ or with normalized price } p_0^0 = \frac{0.05}{1 - \beta}
+	\end{split}
+\end{equation}
+However, the price of this asset is redundant because each component of the asset was already been priced by the market.
+
+\subsection{An exchange economy: stochastic}
+\subsubsection{}
+Applying Law of Multiplication we get
+\begin{equation}
+	\begin{split}
+		\pi_t(s^t) = \pi_t(s_0, s_1, ..., s_t) = \pi_0(s_0)\pi(s_1|s_0)\pi(s_2|s_1)\cdots\pi(s_t|s_{t-1}) \nonumber
+	\end{split}
+\end{equation}
+
+\subsubsection{}
+The social planner's problem is
+\begin{equation}
+	\begin{split}
+		&\max\limits_{\{\{c_t^1(s^t), c_t^2(s^t)\}_{s^t}\}_{t = 0}^{\infty}}\sum\limits_{t = 0}^\infty\beta^t\sum\limits_{s^t}\pi_t(s^t)\begin{bmatrix}\theta \ln(c_t^1(s^t)) + (1 - \theta)\ln(c_t^2(s^t))\end{bmatrix}\text{ s.t. }c_t^1(s^t) + c_t^2(s^t) \leq y_t^1(s^t) + y_t^2(s^t) \Longrightarrow \\\nonumber
+		&\max\limits_{\{\{c_t^1(s^t), c_t^2(s^t)\}_{s^t}\}_{t = 0}^{\infty}}\sum\limits_{t = 0}^\infty\beta^t\sum\limits_{s^t}\pi_t(s^t)\begin{bmatrix}\theta \ln(c_t^1(s^t)) + (1 - \theta)\ln(c_t^2(s^t))\end{bmatrix}\text{ s.t. }c_t^1(s^t) + c_t^2(s^t) \leq s_t +  1 \\
+		&\begin{matrix}
+		\frac{\partial\mathcal{L}}{\partial c_t^1(s^t)}& = \beta^t\pi_t(s^t)\begin{bmatrix}\frac{\theta}{c_t^1(s^t)} - \mu_t(s^t)\end{bmatrix} = 0 \\
+		\frac{\partial\mathcal{L}}{\partial c_t^2(s^t)}& = \beta^t\pi_t(s^t)\begin{bmatrix}\frac{1 - \theta}{c_t^2(s^t)} - \mu_t(s^t)\end{bmatrix} = 0 \\
+		\end{matrix} \Longrightarrow \begin{matrix}
+		\frac{\theta}{c_t^1(s^t)} = \mu_t(s^t)\\
+		\frac{1 - \theta}{c_t^2(s^t)} = \mu_t(s^t)\\
+		\end{matrix} \Longrightarrow \frac{c_t^2(s^t)}{c_t^1(s^t)} = \frac{1 - \theta}{\theta}, \forall t \forall s^t
+		\intertext{Substitute into the feasibility constraint:}
+		&c_t^1(s^t) + \frac{1 - \theta}{\theta}c_t^1(s^t) = 1 + s_t \\
+		&c_t^1(s^t) = \theta(1 + s_t) \Longrightarrow c_t^2(s^t) = (1 - \theta)(1 + s_t)
+	\end{split}
+\end{equation}
+Hence, again we see that consumption of both households at any time $t$ depends only on aggregate endowment at time $t$.
+
+\subsubsection{}
+Since markets open at time $0$, where households trade claims to consumption $\forall t, \forall s^t$, we are considering Arrow-Debreu type markets. Define $q_t^0(s^t)$ as the price for 1 consumption unit at time $t$ and history $s^t$. Then, an Arrow-Debreu competitive equilibrium is a sequence of allocations $\{c_t^1(s^t), c_t^2(s^t)\}_{t = 0}^\infty$ and a price system $\{q_t^0(s^t)\}_{t = 0}^\infty$ such that
+\begin{enumerate}[label = \roman*)]
+	\item allocations solve the households' problem, taking prices as given
+	\begin{equation}
+		c_t^i(s^t) = \arg\max\limits_{\{c_t^i(s^t)\}_{t = 0}^\infty}\sum\limits_{t = 0}^\infty\sum\limits_{s^t}\beta^t\pi_t(s^t)\ln(c_t^i(s^t))\text{ s.t. }\sum\limits_{t = 0}^\infty\sum\limits_{s^t}q_t^0(s^t)[y_t^i(s^t) - c_t^i(s^t)]\geq 0, \qquad\forall i\in\{1, 2\} \nonumber
+	\end{equation}
+	\item price system clears the market
+	\begin{equation}
+		c_t^1(s^t) + c_t^2(s^t) \leq s_t + 1, \qquad\forall t \forall s^t \nonumber
+	\end{equation}
+\end{enumerate}
+
+\subsubsection{}
+
+Write out the Lagrangian and take the FOC:
+\begin{equation}
+	\begin{split}
+		\mathcal{L}^i& = \sum\limits_{t = 0}^\infty\beta^t\sum\limits_{s^t}\pi_t(s^t)\ln(c_t^i(s^t)) + \mu_i\sum\limits_{t = 0}^\infty\sum\limits_{s^t}q_t^0(s^t)[y_t^i(s^t) - c_t^i(s^t)],\qquad \forall i\in\{1, 2\}\\\nonumber
+		&\begin{matrix}
+			\frac{\partial\mathcal{L}^1}{c_t^1(s^t)} = \frac{\beta^t\pi_t(s^t)}{c_t^1(s^t)} - \mu_1q_t^0(s^t) = 0, \forall t \forall s^t\\
+			\frac{\partial\mathcal{L}^2}{c_t^2(s^t)} = \frac{\beta^t\pi_t(s^t)}{c_t^2(s^t)} - \mu_2q_t^0(s^t) = 0, \forall t \forall s^t
+		\end{matrix} \Longrightarrow \frac{c_t^2(s^t)}{c_t^1(s^t)} = \frac{\mu_1}{\mu_2}\Longrightarrow c_t^2(s^t) = \frac{\mu_1}{\mu_2}c_t^1(s^t), \forall t \forall s^t
+		\intertext{Substitute into the feasibility constraint\footnotemark}
+		&c_t^1(s^t) + \frac{\mu_1}{\mu_2}c_t^1(s^t) = 1 + s_t\\
+		&c_t^1(s^t) = \frac{\mu_2(1 + s_t)}{\mu_2 + \mu_1} \Longrightarrow c_t^2(s^t) = \frac{\mu_1(1 + s_t)}{\mu_2 + \mu_1}, \forall t \forall s^t
+		\intertext{To find the equilibrium price substitute equilibrium allocations back to FOC:}
+		&q_t^0(s^t) = \frac{\beta^t\pi_t(s^t)}{\frac{\mu_1\mu_2(1 + s_t)}{\mu_2 + \mu_1}} = \frac{\beta^t\pi_t(s^t)(\mu_2 + \mu_1)}{\mu_1\mu_2(1 + s_t)}, \forall t \forall s^t
+		\intertext{Normalize the price at time $0$}
+		&q_0^0(s_0) = \frac{\pi_0(s_0)(\mu_2 + \mu_1)}{\mu_1\mu_2(1 + s_0)} = 1 \Longrightarrow \frac{\mu_1 + \mu_2}{\mu_1\mu_2} = \frac{1 + s_0}{\pi_0(s_0)} \Longrightarrow q_t^0(s^t) = \frac{\beta^t\pi_t(s^t)}{1 + s_t}\frac{1 + s_0}{\pi_0(s_0)}, \forall t \forall s^t
+	\end{split}
+\end{equation}
+\footnotetext{Since we have an increasing utility function, the aggregate resource constraint holds with equality.}
+
+\subsubsection{}
+
+Thanks to complete markets, locally non-satiated preferences and free disposal, we know from the First Fundamental Welfare Theorem that the CE allocation is also a PE allocation. Hence, if we equate the two solutions for consumption of the two households, we have an equivalence between Pareto weights and Lagrange multiplier (in other words, CE allocation is a particular PE allocation with specific Pareto weights):
+\begin{equation}
+	\begin{split}
+		\intertext{Substitute CE price back to the budget constraint of second household:}
+		&\sum\limits_{t = 0}^\infty\sum\limits_{s^t}\frac{\beta^t\pi_t(s^t)(1 + s_0)}{\pi_0(s_0)(1 + s_t)}[y_t^2(s^t) - c_t^2(s^t)] = 0 \\
+		&\sum\limits_{t = 0}^\infty\sum\limits_{s^t}\frac{\beta^t\pi_t(s^t)}{1 + s_t} = \sum\limits_{t = 0}^\infty\beta^t\sum\limits_{s^t}\frac{\pi_t(s^t)}{\cancel{(1 + s_t)}}(1 - \theta)\cancel{(1 + s_t)} = \sum\limits_{t = 0}^\infty\beta^t\sum\limits_{s^t}\frac{\pi_t(s^t)}{\cancel{(1 + s_t)}}\frac{\mu_1}{\mu_1 + \mu_2}\cancel{(1 + s_t)}\\
+		&\sum\limits_{t = 0}^\infty\sum\limits_{s^t}\frac{\beta^t\pi_t(s^t)}{1 + s_t} = (1 - \theta)\sum\limits_{t = 0}^\infty\beta^t\cancelto{1}{\sum\limits_{s^t}\pi_t(s^t)} = \frac{\mu_1}{\mu_1 + \mu_2}\sum\limits_{t = 0}^\infty\beta^t\cancelto{1}{\sum\limits_{s^t}\pi_t(s^t)}\\
+		&\sum\limits_{t = 0}^\infty\sum\limits_{s^t}\frac{\beta^t\pi_t(s^t)}{1 + s_t} = \frac{1 - \theta}{1 - \beta} = \frac{\mu_1}{(\mu_1 + \mu_2)(1 - \beta)}\\
+		&1 - \theta = \frac{\mu_1}{\mu_1 + \mu_2} = (1 - \beta)\sum\limits_{t = 0}^\infty\beta^t\sum\limits_{s^t}\frac{\pi_t(s^t)}{1 + s_t}\\
+		&c_t^1 = \theta(1 + s_t) = \frac{\mu_2(1 + s_t)}{\mu_1 + \mu_2} \Longrightarrow \theta = \frac{\mu_2}{\mu_2 + \mu_1} \\
+		&c_t^2 = (1 - \theta)(1 + s_t) = \frac{\mu_1(1 + s_t)}{\mu_1 + \mu_2} \Longrightarrow 1 - \theta = \frac{\mu_1}{\mu_2 + \mu_1} \nonumber
+	\end{split}
+\end{equation}
+From the above conditions, notice that in case the first household always receives 0 units of consumption good at all times and states, then his/her Pareto weight is going to be zero. On the other extreme, if the first household always gets one unit of consumption good $\forall t \forall s^t$, then $1 - \theta = \theta = \frac{1}{2}$. Therefore, $\theta\in[0, \frac{1}{2}]$.
+\end{document}

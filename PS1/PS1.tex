@@ -1,0 +1,235 @@
+\documentclass[]{article}
+\usepackage{amsmath, amsfonts}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage{geometry}
+\usepackage{cancel}
+\usepackage{graphicx}
+\usepackage{color}
+
+%opening
+\title{Problem Set I \\ \large Macroeconomics I}
+\author{Nurfatima Jandarova}
+\date{\today}
+\pagestyle{fancy}
+
+\lhead{Macroeconomics I, Problem Set I}
+\rhead{Nurfatima Jandarova}
+\renewcommand{\headrulewidth}{0.4pt}
+\fancyheadoffset{1 cm}
+
+\geometry{a4paper, left=20mm, top=20mm, bottom = 20mm, headheight=20mm}
+
+\sloppy
+\definecolor{lightgray}{gray}{0.5}
+\setlength{\parindent}{0pt}
+
+\begin{document}
+
+\maketitle
+
+\subsection*{Exercise 1}
+
+\begin{enumerate}[label=(\roman*)]
+	\item Define $X$ as the set of all possible values for the state variable $x_t$. Then, 
+	\begin{equation}
+		\begin{split}
+		\hat{u}: X\times\mathbb{R} &\longrightarrow \mathbb{R}, (x_t, c_t) \longmapsto U(c_t) \\ \nonumber
+		\hat{\Gamma}(x_t) = &[0, f(x_t)+(1-\delta)x_t] \\
+		\hat{f}: X\times\mathbb{R} &\longrightarrow X, (x_t, c_t) \longmapsto f(x_t)-c_t+(1-\delta)x_t\\
+		\end{split}
+	\end{equation}
+	
+	\item Given $X_t$, the set of all possible values for a state variable,
+	\begin{equation}
+		\begin{split}
+		&\tilde{F}: X\times X\longrightarrow\mathbb{R}, (x_t, x_{t+1}) \longmapsto U(f(x_t)+(1-\delta)x_t-x_{t+1} \\ \nonumber
+		&\tilde{\Gamma}(x_t) = [0, (1-\delta)x_t+f(x_t)]
+		\end{split}
+	\end{equation}
+\end{enumerate}
+
+\subsection*{Exercise 2.1}
+Since the utility function is monotonically increasing, the budget constraint holds with equality, i.e.,  $c_t+x_{t+1}=(1-\delta)x_t, \forall t \in [0, T]$. Setup the Lagrangian:
+\begin{equation}
+	\begin{split}
+	\mathcal{L}& = \sum\limits_{t=0}^{T}\beta^t\ln(c_t)+\lambda_t((1-\delta)x_t-c_t-x_{t+1})\\\nonumber
+	\text{FOC: }& \begin{cases}
+	\frac{\beta^t}{c_t}=\lambda_t \\
+	\lambda_{t+1}(1-\delta) = \lambda_t \\
+	(1-\delta)x_t-c_t-x_{t+1}
+	\end{cases}\Rightarrow\\
+	\text{Euler equation: }& \frac{\beta_{t+1}(1-\delta)}{c_{t+1}}=\frac{\beta_{t}}{c_{t}} \\
+	& \frac{c_{t+1}}{c_t}=\beta(1-\delta)
+	\end{split}
+\end{equation}
+
+\subsubsection*{Exercise 2.1.2}
+
+[See .m file for the code]
+
+\includegraphics [width=4in]{PS1_01.eps}
+
+\subsection*{Exercise 2.2}
+First of all, define the following sets: $B(x_t) = [0, (1-\delta)x_t]$ is the set of possible values for $c_t$ and $\Gamma(x_t)=[0, (1-\delta)x_t]$ is the set of possible values for $x_{t+1}$. Then, using the results from our lecture notes, we could rewrite the optimization problem using Bellman equation:
+\begin{equation}
+	V_s(x_{T-s}) = \max\limits_{c_{T-s}\in B(x_{T-s})}\ln(c_{T-s}) + \beta V_{s-1}((1-\delta)x_{T-s}-c_{T-s}), \forall s\in[0, T] \nonumber
+\end{equation}
+We also have a guess about the functional form of the value function: $V_s(x_{T-s}) = A_s + B_s\ln(x_{T-s})$. Substitute this into the above equation and take the first order condition with respect to $c_{T-s}$:
+
+\begin{equation}
+	\begin{split}
+	A_s + B_s\ln(x_{T-s})& = \max\limits_{c_{T-s}\in B(x_{T-s})}\ln(c_{T-s}) + \beta(A_{s-1} + B_{s-1}\ln((1-\delta)x_{T-s}-c_{T-s})), \forall s\in[0, T] \\ \nonumber
+	\text{FOC: }0& = \frac{1}{c_{T-s}^*}-\frac{\beta B_{s-1}}{(1-\delta)x_{T-s}-c_{T-s}^*}\\
+	\beta B_{s-1}c_{T-s}^*& = (1-\delta)x_{T-s}-c_{T-s}^* \\
+	c_{T-s}^*& = \frac{1-\delta}{1+\beta B_{s-1}}x_{T-s} \\
+	\text{Substitute this }&\text{back to the value function: } \\
+	A_s + B_s\ln(x_{T-s})& = \ln(\frac{1-\delta}{1+\beta B_{s-1}}x_{T-s}) + \beta(A_{s-1} + B_{s-1}\ln((1-\delta)x_{T-s}-\frac{1-\delta}{1+\beta B_{s-1}}x_{T-s})), \forall s\in[0, T] \\
+	A_s + B_s\ln(x_{T-s})& = \ln(\frac{1-\delta}{1+\beta B_{s-1}}x_{T-s}) + \beta(A_{s-1} + B_{s-1}\ln(\frac{\beta B_{s-1}(1-\delta)x_{T-s}}{1+\beta B_{s-1}})), \forall s\in[0, T] \\
+	\text{Hence, }& \begin{cases}
+	B_s\ln(x_{T-s}) = \ln(x_{T-s}) + \beta B_{s-1}\ln(x_{T-s}) \\
+	A_s = (1+\beta B_{s-1})\ln(1-\delta)-\ln(1+\beta B_{s-1}) + \beta A_{s-1} + \beta B_{s-1}\ln\beta B_{s-1}
+	\end{cases}\\
+	\text{From the first }& \text{equation we can get a general formula for } B_{s}:\\
+	B_s& = 1 + \beta B_{s-1} \\
+	s = 0: B_0& = 1 \\
+	s = 1: B_1& = 1 + \beta \\
+	\text{Thus, } B_s& = \sum\limits_{j=0}^s \beta^j \text{ and } A_s = (\sum\limits_{j=0}^s \beta^j)\ln(1-\delta)-\ln(\sum\limits_{j=0}^s \beta^j) + \beta A_{s-1} + \beta \sum\limits_{j=0}^{s-1} \beta^j\ln(\beta\sum\limits_{j=0}^{s-1}) \\
+	\end{split}
+\end{equation}
+Summarizing, the optimal policy is $\pi_T^* = \{g_t(x_t)\}_{t=0}^T = \begin{Bmatrix}
+\frac{1-\delta}{\sum\limits_{j=0}^{T-t} \beta^j}x_{t}
+\end{Bmatrix}_{t=0}^T$ and $V_T(x_0) = A_T + B_T\ln(x_0)$, where $B_T = \sum\limits_{j=0}^T \beta^j$ and $A_T = (\sum\limits_{j=0}^T \beta^j)\ln(1-\delta)-\ln(\sum\limits_{j=0}^T \beta^j) + \beta A_{T-1} + \beta \sum\limits_{j=0}^{T-1} \beta^j\ln(\beta\sum\limits_{j=0}^{T-1})$. Also, the optimal path for $\{x_{t}\}_{t=1}^T$ could therefore be computed as:
+\begin{equation}
+	x_{t+1}^* = (1-\delta)x_t-c_t^* = (1-\delta)x_t - (1-\delta)x_t\frac{1}{\sum\limits_{j=0}^{T-t} \beta^j} = (1-\delta)x_t\begin{pmatrix}
+	\frac{\sum\limits_{j=0}^{T-t} \beta^j-1}{\sum\limits_{j=0}^{T-t} \beta^j} \nonumber
+	\end{pmatrix}
+\end{equation}
+
+\subsubsection*{Exercise 2.2.2}
+
+[See .m file for the code]
+
+\includegraphics [width=4in]{PS1_02.eps}
+
+As witnessed from the chart above, the two methods provide identical optimal paths
+for $x_t$.
+
+\subsection*{Exercise 3}
+
+\subsubsection*{Exercise 3.1}
+Define $K$ as the set of all possible values for capital, $k_t$ and the law of motion, $k_{t+1} = \tilde{f}(k_t, c_t) = f(k_t) + (1-\delta)k_t - c_t = k_t^\alpha + (1-\delta)k_t - c_t$. Define as well the set of all possible values for consumption, $B(k_t) = [0, k_t^\alpha + (1-\delta)k_t]$, and the set of all possible values for future capital, $\Gamma(x_t) = [0, k_t^\alpha + (1-\delta)k_t]$. Then, the dynamic problem could be written as 
+\begin{equation}
+	\begin{split}
+	\max\limits_{k_{t+1}\in\Gamma(k_t)}&\sum\limits_{t=0}^{T}\beta^t u(k_t^\alpha + (1-\delta)k_t - k_{t+1}) \\\nonumber
+	\text{FOC: }& -\beta^t u'(k_t^\alpha + (1-\delta)k_t - k_{t+1}) + \beta^{t+1}u'(k_{t+1}^\alpha + (1-\delta)k_{t+1} - k_{t+2})(\alpha k_{t}^{\alpha-1} + 1 - \delta) = 0 \\
+	\text{EE: }& \beta u'(c_{t+1})(\alpha k_{t}^{\alpha-1} + 1 - \delta) = u'(c_t)
+	\end{split}
+\end{equation}
+
+It is straightforward to see that our constraint correspondences are non-empty, compact and continuous and that the law of motion, $\tilde{f}(k_t, c_t)$ is continuous. By assumption of the problem, utility function is continuous and bounded. Therefore, by the theory of the maximum a solution to the dynamic problem exists, is continuous and bounded.
+
+\subsubsection*{Exercise 3.2}
+
+Since we are given that $\delta = 1$, the law of motion now is $\tilde{f}(k_t, c_t) = k_t^\alpha - c_t$. Hence, using the results from the lecture notes, we can write the dynamic problem with Bellman equation:
+\begin{equation}
+	\begin{split}
+	V_s(k_{T-s})& = \max\limits_{c_{T-s}\in B(k_{T-s})}\ln(c_{T-s}) + \beta V_{s-1}(k_{T-s}^\alpha - c_{T-s}), B(k_{T-s}) = [0, k_{T-s}^\alpha] \\ \nonumber
+	s = 0: V_0(k_{T})& = \max\limits_{c_{T}\in B(k_{T})}\ln(c_{T}), B(k_{T}) = [0, k_{T}^\alpha]
+	\end{split}
+\end{equation}
+Since the utility function is monotonically increasing, we know the budget constraint is going to bind from above. Also, due to the fact that the agent lives for only $T$ periods, $k_{T+1}^* = g_T(k_T) = 0$. Hence,
+\begin{equation}
+	\begin{split}
+	c_{T}^*& = h_T(k_T) = k_{T}^\alpha \\ \nonumber
+	k_{T+1}^*& = g_T(k_T) = 0 \\
+	V_0(k_T)& = \ln(k_{T}^\alpha) = \alpha\ln(k_T)
+	\end{split}
+\end{equation}
+
+Similarly, for $s=1$:
+
+\begin{equation}
+\begin{split}
+V_1(k_{T-1})& = \max\limits_{c_{T-1}\in B(k_{T-1})}\ln(c_{T-1}) + \beta V_{0}(k_{T-1}^\alpha - c_{T-1}) \\ \nonumber
+& = \max\limits_{c_{T-1}\in B(k_{T-1})}\ln(c_{T-1}) + \alpha\beta\ln(k_{T-1}^\alpha - c_{T-1})\\
+\text{FOC: }& \frac{1}{c_{T-1}^*}-\frac{\alpha\beta}{k_{T-1}^\alpha - c_{T-1}^*} = 0 \\
+c_{T-1}^*& = h_{T-1}(k_{T-1}) = \frac{k_{T-1}^\alpha}{1+\alpha\beta} \\
+k_{T}^*& = g_{T-1}(k_{T-1}) = \frac{\alpha\beta k_{T-1}^\alpha}{1+\alpha\beta} \\
+V_1(k_{T-1})& = \ln(\frac{k_{T-1}^\alpha}{1+\alpha\beta}) + \alpha\beta\ln(\frac{\alpha\beta k_{T-1}^\alpha}{1+\alpha\beta})
+\end{split}
+\end{equation}
+
+and $s = 2$:
+
+\begin{equation}
+\begin{split}
+V_2(k_{T-2})& = \max\limits_{c_{T-2}\in B(k_{T-2})}\ln(c_{T-2}) + \beta V_{1}(k_{T-2}^\alpha - c_{T-2}) \\ \nonumber
+& = \max\limits_{c_{T-2}\in B(k_{T-2})}\ln(c_{T-2}) + \beta\begin{pmatrix}\ln\begin{pmatrix}\frac{(k_{T-2}^\alpha - c_{T-2})^\alpha}{1+\alpha\beta}\end{pmatrix} + \alpha\beta\ln\begin{pmatrix}\frac{\alpha\beta (k_{T-2}^\alpha - c_{T-2})^\alpha}{1+\alpha\beta}\end{pmatrix}\end{pmatrix}\\
+\text{FOC: }& \frac{1}{c_{T-2}^*}-\frac{\alpha\beta(1+\alpha\beta)}{k_{T-2}^\alpha - c_{T-2}^*} = 0 \\
+c_{T-2}^*& = h_{T-2}(k_{T-2}) = \frac{k_{T-2}^\alpha}{1+\alpha\beta+\alpha^2\beta^2} \\
+k_{T-1}^*& = g_{T-2}(k_{T-2}) = \frac{(\alpha\beta + \alpha^2\beta^2) k_{T-2}^\alpha}{1+\alpha\beta + \alpha^2\beta^2} \\
+V_2(k_{T-2})& = \ln(\frac{k_{T-2}^\alpha}{1+\alpha\beta+\alpha^2\beta^2}) + \beta\begin{pmatrix}\ln\begin{pmatrix}\frac{(\frac{(\alpha\beta + \alpha^2\beta^2) k_{T-2}^\alpha}{1+\alpha\beta + \alpha^2\beta^2})^\alpha}{1+\alpha\beta}\end{pmatrix} + \alpha\beta\ln\begin{pmatrix}\frac{\alpha\beta (\frac{(\alpha\beta + \alpha^2\beta^2) k_{T-2}^\alpha}{1+\alpha\beta + \alpha^2\beta^2})^\alpha}{1+\alpha\beta}\end{pmatrix}\end{pmatrix} \\
+& = \alpha\ln(k_{T-2}) - \ln(1+\alpha\beta + \alpha^2\beta^2) + (\alpha\beta + \alpha^2\beta^2)\alpha\ln(k_{T-2}) + (\alpha\beta + \alpha^2\beta^2)\ln(\alpha\beta + \alpha^2\beta^2) - \\& -(\alpha\beta + \alpha^2\beta^2)\ln(1+\alpha\beta + \alpha^2\beta^2)-(1+\alpha\beta)\beta\ln(1+\alpha\beta)+\alpha\beta^2\ln(\alpha\beta)
+\end{split}
+\end{equation}
+
+In general, we can give a formula for the optimal decision rules for consumption and savings:
+
+\begin{equation}
+	\begin{split}
+	h_t(k_t) = \frac{k_{t}^\alpha}{\sum\limits_{j=0}^{T-t}(\alpha\beta)^j} \\ \nonumber
+	g_t(k_t) = k_t^\alpha\frac{\sum\limits_{j=0}^{T-t}(\alpha\beta)^j-1}{\sum\limits_{j=0}^{T-t}(\alpha\beta)^j}
+	\end{split}
+\end{equation}
+
+\subsubsection*{Exercise 3.3}
+
+[See .m file for the code]
+
+\includegraphics [width=4in]{PS1_03.eps}
+
+\includegraphics [width=4in]{PS1_04.eps}
+
+In the latter chart, we can see that value functions change through time. In a finite time horizon setup, at each point in time the value functions consists of a continuation value (flow utility) and the remaining optimal life-time utility ($V_{s-1}$). Hence, as we move closer towards 'the end of the world', the remaining life-time utility decreases. Also, the closer we get to $T$, the smaller are our incentives to save, hence we eat up the capital stock.
+
+\subsection*{Exercise 4}
+
+\subsubsection*{Exercise 4.1}
+
+Simulating Markov chain process with 3 nodes for 200 periods.
+
+[See .m file for the code]
+
+\color{lightgray} \begin{verbatim}
+zstep =
+
+0.3000
+
+Sample mean = 0.012
+Sample variance = 0.0043779
+\end{verbatim} \color{black}
+
+\includegraphics [width=4in]{PS1_05.eps}
+
+
+\subsubsection*{Exercise 4.2}
+
+Simulating Markov chain process with 11 nodes for 200 periods.
+
+sufficient
+
+\color{lightgray} \begin{verbatim}
+zstep =
+
+0.0600
+
+Sample mean = 0.0027
+Sample variance = 0.0065233
+\end{verbatim} \color{black}
+
+\includegraphics [width=4in]{PS1_06.eps}
+
+First of all, notice that here we have a zero mean process. Since $|\rho|<1$, we know the process is stationary. Hence, unconditional mean is zero and variance is $\frac{\sigma^2}{1-\rho^2} = 0.01$. So, in both cases it is easy to see that the sample variances are relatively close to the unconditional variance of a continuous process. And the sample means are within one standard deviation from the population mean.
+
+\end{document}
