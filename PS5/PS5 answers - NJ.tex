@@ -1,0 +1,89 @@
+\documentclass[]{article}
+\usepackage{amsmath, amsfonts}
+\usepackage[inline]{enumitem}
+\usepackage{fancyhdr}
+\usepackage{geometry}
+\usepackage{cancel}
+\usepackage{graphicx}
+\usepackage{color}
+\usepackage{subcaption}
+\usepackage{cleveref}
+\usepackage{MnSymbol,wasysym}
+\usepackage{titlesec}
+
+%opening
+\title{Problem Set V \\ \large Macroeconomics I}
+\author{Nurfatima Jandarova}
+\date{\today}
+\pagestyle{fancy}
+
+\lhead{Macroeconomics I, Problem Set V}
+\rhead{Nurfatima Jandarova}
+\renewcommand{\headrulewidth}{0.4pt}
+\fancyheadoffset{1 cm}
+
+\geometry{a4paper, left=20mm, top=20mm, bottom = 20mm, headheight=20mm}
+
+\sloppy
+\definecolor{lightgray}{gray}{0.5}
+\setlength{\parindent}{0pt}
+
+\renewcommand{\thesubsection}{Exercise \arabic{subsection}}
+\renewcommand{\thesubsubsection}{\textbf{(\alph{subsubsection})}}
+\titleformat{\subsubsection}[runin]
+{\normalfont\normalsize}{\thesubsubsection}{1em}{}
+
+
+\begin{document}
+
+\maketitle
+
+\subsection{Corners again}
+
+\subsubsection{}
+\begin{itemize}
+	\item time is discrete and infinite
+	\item Define $s_t\in W$ the realization of a stochastic event that defines the wage rate. Hence, history of events is denoted as $s^t$. Define as well the associated transition matrix, $P(s_{t+1}|s_t)$ and the unconditional probability of each history $s^t$ at time $t$, $\pi_t(s^t)$.
+	\item Household values $\mathbb{E}_0\sum\limits_{t = 0}^\infty\beta^t[\ln(c_t(s^t)) - (1 - l_t(s^t))] = \sum\limits_{t = 0}^\infty\sum\limits_{s^t}\beta^t\pi_t(s^t)[\ln(c_t(s^t)) - n_t(s^t)], \quad\beta\in(0, 1)$. Notice that period utility is a  $\mathcal{C}^2$, increasing in both $c_t(s^t)$ and $l_t(s^t)$, and a concave function. Furthermore, period utility function satisfies Inada condition with respect to consumption, but not with respect to leisure: $\lim\limits_{c\to0}u_c(c, l) = \lim\limits_{c\to0}\frac{1}{c} = \infty, \forall c$, $\lim\limits_{l\to0}u_l(c, l) = \lim\limits_{l\to0}1 = 1, \forall l$.
+	\item At time $t$ and history $s^t$, a consumer is paid $w_t(s_t)$. Notice, that wage is said to follow Markov process, i.e., is history-independent. Therefore, the allocations in the economy are as well history-independent.
+	\item Although not directly specified by the problem, I assume sequential trade market structure. Define $a_{t+1}(s^t, s_{t+1})$ the amount of claims on time $t+1$, history $s^{t+1}$ consumption bought at time $t$, history $s^t$.
+	\item Consumer has to choose allocations $\{c_t(s^t), n_t(s^t)\}_{t = 0}^\infty$ and asset positions $a_{t+1}(s^t, s_{t+1})$ to
+	\begin{equation}
+		\begin{split}
+			\max\limits_{\{c_t(s_t), n_t(s_t), a_{t+1}(s_t, s_{t+1})\}_{t = 0}^\infty}&\sum\limits_{t = 0}^\infty\beta^t\sum\limits_{s^t}\pi_t(s^t)[\ln(c_t(s_t)) - n_t(s_t)]\text{ s.t. }\\
+			&c_t(s_t) + \sum\limits_{s_{t+1}|s^t}\frac{a_{t+1}(s_t, s_{t+1})}{1+r} = w_t(s_t)n_t(s_t) + a_t(s_t), \qquad\forall t, \forall s^t\nonumber\\
+			&a_{t+1}(s_t, s_{t+1}) \geq B, \qquad \forall t, \forall s_t, \forall s_{t+1}\\
+			&a_0(s_0) = 0
+		\end{split}
+	\end{equation}
+\end{itemize}
+Hence, the problem could be written recursively as 
+\begin{equation}
+	\begin{split}
+		V(a, s) = \max\limits_{c, n, a'}\{\ln(c) - n + \beta\sum\limits_{s'\in W}P(s'|s)V(a'(s'), s')\}\text{ s.t. }&c + \sum\limits_{s'\in W}\frac{a'(s')}{1 + r} = w(s)n + a \nonumber \\
+		& a'(s')\geq B,  \qquad\forall s'\in W
+		\intertext{or}
+		V(a, s) = \max\limits_{n, a'}\begin{Bmatrix}\ln\begin{pmatrix}w(s)n + a - \sum\limits_{s'\in W}\frac{a'(s')}{1 + r}\end{pmatrix} - n + \beta\sum\limits_{s'\in W}P(s'|s)V(a'(s'), s')\end{Bmatrix}\text{ s.t. } & a'(s')\geq B,  \quad\forall s'\in W
+	\end{split}
+\end{equation}
+
+\subsubsection{}
+If $B$ is the natural debt limit, then the borrowing constraint will never bind. Suppose it does, which then implies that the household will be bound to consume 0 for the rest of infinite life. However, consumer's period utility satisfies Inada condition with respect to consumption, i.e., even a slightest deviation form zero constitutes a vast utility improvement. Hence, at equilibrium consumer will never want to have zero consumption.
+
+\subsubsection{}
+Policy functions for the household are given by $\sigma^c(a, s), \sigma^n(a, s), \sigma^a(a, s, s')$. Then, the FOCs are:
+\begin{equation}
+	\begin{split}
+		\frac{1}{\sigma^c(a, s)}& = \mu \\ \nonumber
+		-1 + \mu w(s) = -1 + \frac{w(s)}{\sigma^c(a, s)}& \\
+		\begin{matrix}
+		&\frac{\mu}{1 + r} = \beta P(s'|s)\frac{\partial V(a'(s'), s')}{\partial a'(s')}\\
+		&\frac{\partial V(a, s)}{\partial a} = \mu
+		\end{matrix}& \Longrightarrow \frac{1}{1 + r} = \beta P(s'|s) \frac{\sigma^c(a, s)}{\sigma^c(\sigma^a(a, s, s'), s')}
+	\end{split}
+\end{equation}
+
+
+\subsection{Irreversible capital accumulation}
+
+\end{document}
