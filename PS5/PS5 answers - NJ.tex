@@ -86,4 +86,104 @@ Policy functions for the household are given by $\sigma^c(a, s), \sigma^n(a, s),
 
 \subsection{Irreversible capital accumulation}
 
+\subsection{Endogenous labour supply}
+
+\subsubsection{}
+The planner's problem sequentially:
+\begin{equation}
+	\begin{split}
+		\mathcal{L}& = \sum\limits_{t = 0}^T\beta^t\begin{Bmatrix}\ln(c_t) - \ln(n_t) + \mu_t\begin{pmatrix}n_t^\alpha k_t^{1 - \alpha} + (1 - \delta)k_t - k_{t+1} - c_t\end{pmatrix}\end{Bmatrix} \nonumber \\
+		\intertext{FOCs:}
+		&\begin{cases}
+			\frac{\partial\mathcal{L}}{\partial c_t}& = \beta^t\begin{Bmatrix}\frac{1}{c_t} - \mu_t\end{Bmatrix} = 0, \qquad
+			\forall t\leq T - 1 \\
+			\frac{\partial\mathcal{L}}{\partial n_t}& = \beta^t\begin{Bmatrix}-\frac{1}{n_t} + \mu_t\alpha n_t^{\alpha - 1}k_t^{1 - \alpha}\end{Bmatrix} = 0, \qquad\forall t\leq T - 1 \\
+			\frac{\partial\mathcal{L}}{\partial k_{t+1}}& = -\beta^t\mu_t + \beta^{t+1}\mu_{t+1}\begin{pmatrix}(1 - \alpha)n_{t+1}^\alpha k_{t+1}^{ - \alpha} + 1 - \delta\end{pmatrix} = 0, \qquad\forall t\leq T - 1 \\
+			\frac{\partial\mathcal{L}}{\partial \mu_t}& = \beta^t\begin{pmatrix}n_t^\alpha k_t^{1 - \alpha} + (1 - \delta)k_t - k_{t+1} - c_t\end{pmatrix} = 0, \qquad\forall t\leq T-1
+		\end{cases} \Rightarrow 
+		\begin{cases}
+			\frac{1}{c_t}& = \mu_t \\
+			c_t& =  \alpha n_t^\alpha k_t^{1 - \alpha} \\
+			\frac{1}{c_t}& = \beta\frac{1}{c_{t+1}}\begin{pmatrix}(1 - \alpha) \begin{pmatrix}\frac{k_{t+1}}{n_{t+1}}\end{pmatrix}^{-\alpha} + 1 - \delta\end{pmatrix} \\
+			c_t + k_{t+1}& = n_t^\alpha k_t^{1 - \alpha} + (1 - \delta)k_t
+		\end{cases}
+		\intertext{Using the intratemporal FOC and resource constraint we get the following}
+		&\begin{cases}
+			c_t =  \alpha n_t^\alpha k_t^{1 - \alpha} \\
+			(1 - \alpha)n_t^\alpha k_t^{1 - \alpha} = k_{t + 1} - (1 - \delta)k_t
+		\end{cases} \Rightarrow \begin{cases}
+			c_t =  \alpha n_t^\alpha k_t^{1 - \alpha} \\
+			n_t  = \begin{bmatrix}
+			\frac{k_{t + 1} - (1 - \delta)k_t}{(1 - \alpha)k_t^{1 - \alpha}}
+			\end{bmatrix}^{\frac{1}{\alpha}}
+		\end{cases} \Rightarrow \begin{cases}
+			c_t = \frac{\alpha}{1 - \alpha}\begin{bmatrix}k_{t + 1} - (1 - \delta)k_t\end{bmatrix} \\
+			n_t  = \begin{bmatrix}
+			\frac{k_{t + 1} - (1 - \delta)k_t}{(1 - \alpha)k_t^{1 - \alpha}}
+			\end{bmatrix}^{\frac{1}{\alpha}}
+		\end{cases}
+		\intertext{Hence,}
+		&\begin{cases}
+			\tilde{c}(k_t, k_{t+1})& = \frac{\alpha}{1 - \alpha}\begin{bmatrix}k_{t + 1} - (1 - \delta)k_t\end{bmatrix}, \quad\forall t\leq T - 1 \\
+			\tilde{n}(k_t, k_{t+1})& = \begin{bmatrix}
+			\frac{k_{t + 1} - (1 - \delta)k_t}{(1 - \alpha)k_t^{1 - \alpha}}
+			\end{bmatrix}^{\frac{1}{\alpha}}, \quad\forall t\leq T - 1
+		\end{cases}
+	\end{split}
+\end{equation}
+
+Since the utility function is strictly increasing in $c_t$ nd decreasing in $n_t$, in the terminal period $t = T$, the following conditions hold:
+\begin{equation}
+	\begin{split}
+		k_{T + 1}& = 0 \\
+		n_T& = 0 \\
+		c_T& = (1 - \delta)k_T
+	\end{split}\nonumber
+\end{equation}
+
+%To write the planner's problem recursively, define the constrain sets for consumption, labour and capital: $n_t\in[0, 1]$, $c_{t}\in B(k_t):=[0, k_t^{1 - \alpha} + (1 - \delta)k_t]$, and $k_{t+1}\in\Gamma(k_t):=[0, k_t^{1 - \alpha} + (1 - \delta)k_t]$.
+
+The planner's problem recursively:
+
+\begin{equation}
+	\begin{split}
+		V_{s}(k_{T - s})& = \max\limits_{n_{T - s}, c_{T - s}}\ln(c_{T - s}) - \ln(n_{T - s}) + \beta V_{s-1}(n_{T - s}^\alpha k_{T - s}^{1 - \alpha} + (1 - \delta)k_{T - s} - c_{T - s}) \nonumber \\
+		\intertext{FOCs:}
+		&\begin{cases}
+			\frac{1}{c_t}& = \beta V_{s - 1}'(n_t^\alpha k_t^{1 - \alpha} + (1 - \delta)k_t - c_t), \qquad\forall t\leq T - 1 \\
+			\frac{1}{n_t}& = \beta\alpha n_t^{\alpha - 1}k_t^{1 - \alpha}V_{s - 1}'(n_t^\alpha k_t^{1 - \alpha} + (1 - \delta)k_t - c_t), \qquad\forall t\leq T - 1 \\
+		\end{cases}	
+	\end{split}
+\end{equation}
+
+To proceed further, one needs to know the functional form of the value functions at each point in time. It seems to me that I'd need to use value function iteration or guess and verify to obtain functional forms of the value functions and optimal decision rules. Envelope condition does not apply because in a finite horizon, value functions do differ across time. So, for the numerical part I continue using first-order conditions derived from sequential problem as both problems should yield same result.
+
+\subsubsection{}
+
+Using the FOC in the previous part, numerical solution yields the following paths for capital, labour and consumption. Notice that optimal choice of capital for the next period is constant over time until it drops to zero when the world ends. Unlike the very simple finite-horizon growth model considered in Problem Set 1, social planner chooses the keep the stock of capital constant because \begin{enumerate*}[label=\roman*)]\item a unit of labour supplied results in higher disutility to the agent than an increase in the capital stock, and \item a lower supply of labour will result in gradual decrease of capital stock and a lower consumption plan for an agent \end{enumerate*}. Using results from the previous part, one can show that $k_{t+1} = k_t \Longrightarrow n_t = k_t\begin{pmatrix}\frac{\delta}{1 - \alpha}\end{pmatrix}^{\frac{1}{\alpha}} \approx 0.04$ (see \Cref{fig:ex4npath}). This allows an agent to enjoy a constant consumption plan for almost an entire life, except the terminal period, when he/she consumes everything that is left before the world ends (see \Cref{fig:ex4cpath}).
+
+\begin{figure}[h]
+	\centering
+	\begin{subfigure}{0.5\textwidth}
+		\centering
+		\includegraphics[width = 0.95\linewidth]{kpath.eps}
+		\caption{Optimal capital path starting at $k_0 = 2$}
+		\label{fig:ex4kpath}
+	\end{subfigure}~
+	\begin{subfigure}{0.5\textwidth}
+		\centering
+		\includegraphics[width = 0.95\linewidth]{npath.eps}
+		\caption{Optimal path for labour with $k_0 = 2$}
+		\label{fig:ex4npath}
+	\end{subfigure}
+	\begin{subfigure}{0.5\textwidth}
+		\centering
+		\includegraphics[width = 0.95\linewidth]{cpath.eps}
+		\caption{Optimal consumption path with $k_0 = 2$}
+		\label{fig:ex4cpath}
+	\end{subfigure}
+	\caption{Numerical solution to optimal policy rules}
+	\label{fig:ex4}
+\end{figure}
+
 \end{document}
