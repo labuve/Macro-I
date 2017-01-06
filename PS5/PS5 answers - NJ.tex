@@ -86,6 +86,108 @@ Policy functions for the household are given by $\sigma^c(a, s), \sigma^n(a, s),
 
 \subsection{Irreversible capital accumulation}
 
+\subsubsection{}
+The problem could be written recursively
+\begin{equation}
+	\begin{split}
+		V(a, k)& = \max\limits_{c, k'}\ln(c) + \beta\mathbb{E}_{a'|a}V(a', k')\\\nonumber
+		\text{ s.t. }& c + k' = ak^\alpha + (1 - \delta)k \\
+		& k' - (1 - \delta)k\geq 0
+		\intertext{FOCs:}
+		& \begin{cases}
+			\frac{1}{c} = \mu \\
+			\beta\mathbb{E}_{a'|a}\frac{\partial V(a', k')}{\partial k'} - \mu + \lambda = 0\\
+			\min\{\lambda, k' - (1 - \delta)k\} = 0
+		\end{cases}
+		\intertext{Envelope condition}
+		\frac{\partial V(a, k)}{\partial k}& = \mu(a\alpha k^{\alpha - 1} + 1 - \delta) - \lambda(1 - \delta)
+	\end{split}
+\end{equation}
+
+\subsubsection{}
+
+Combining the FOCs and the envelope condition we get
+\begin{equation}
+	\underbrace{\beta\mathbb{E}_{a'|a}\begin{bmatrix}\frac{a'\alpha(k')^{\alpha - 1} + 1 - \delta}{c'}\end{bmatrix}}_{\substack{\text{discounted expected marginal} \\ \text{benefit of consumption tomorrow}}} + \underbrace{\lambda - \beta\lambda'(1 - \delta)}_{(*)} = \underbrace{\frac{1}{c}}_{\substack{\text{marginal benefit of}\\\text{consumption today}}}
+	\label{eq:ex2finfoc}
+\end{equation}
+(*) It seems to me that this expression gives an intertemporal value of relaxing irreversibility constraint today versus tomorrow. In a sense, due to depreciation of capital it is "easier" to relax irreversibility constraint in the future than today, but subject to discounting as it takes place in the future. 
+
+Suppose that $k' > (1 - \delta)k \Rightarrow \lambda = 0$. Then, \eqref{eq:ex2finfoc} turns into an Euler equation in standard RBC model:
+\begin{equation}
+	\beta\mathbb{E}_{a'|a}\begin{bmatrix}\frac{a'\alpha(k')^{\alpha - 1} + 1 - \delta}{c'}\end{bmatrix} = \frac{1}{c} \nonumber
+\end{equation}
+Now it is easier to see that if $\lambda > 0 \Rightarrow k' = (1 - \delta)k$, then an agent ideally would want to start eating up the capital stock, but cannot. Hence, an agent ends up with higher $k'$ and lower $c$ compared to the standard case with reversible investment. This means that
+\begin{equation}
+	\beta\mathbb{E}_{a'|a}\begin{bmatrix}\frac{a'\alpha(k')^{\alpha - 1} + 1 - \delta}{c'}\end{bmatrix} < \frac{1}{c} \nonumber
+\end{equation}
+, i.e., again consumer would have been better off consuming more today, but is bound to postpone consumption to the future period.
+
+\subsubsection{}
+As long as the depreciation rate of capital $\delta > 0$, irreversibility constraint does not affect the non-stochastic steady-state of capital $k^*$.
+
+\underline{Algebraically:}
+\begin{enumerate}
+	\item Remove shocks: $a = \mathbb{E}(a) = 1$
+	\item $k$ such that $k = k' = k^*$. This means that $k^* - (1 - \delta)k^* > 0$ if $\delta > 0$. This also implies that $\Rightarrow c = c' = c^* \Longrightarrow$
+	\begin{equation}
+		\begin{split}
+			\frac{1}{\cancel{c^*}}& = \beta\frac{\alpha(k^*)^{\alpha - 1} + 1 - \delta}{\cancel{c^*}} \nonumber \\
+			k^*& = \begin{bmatrix}\frac{1}{\alpha}\begin{pmatrix}\frac{1}{\beta} - (1 - \delta)\end{pmatrix}\end{bmatrix}^{\frac{1}{\alpha - 1}}
+		\end{split}
+	\end{equation}
+	i.e., same as the steady-state capital in the standard model.
+\end{enumerate}
+
+\underline{Intuitively:}
+Steady-state capital is defined as the level of capital constant over time. To keep it constant over time in presence of capital depreciation, investment needs to be positive. Thus, irreversibility of investment has no impact on the steady-state level capital.
+
+\subsubsection{}
+
+As in standard case, value function is increasing in the productivity level. Higher productivity level allows to produce more for a given level of capital, and hence allows agents to enjoy higher life-time utility. At the same time, higher productivity level also allows agents to both consume and save more. Therefore, the intersection of capital decision rule with 45$^\circ$ line is higher for higher productivity level, i.e., higher productivity level allows agents to accumulate capital longer.
+
+\begin{figure}[h]
+	\centering
+	\begin{subfigure}{0.45\textwidth}
+		\centering
+		\includegraphics[width = 0.95\linewidth]{ex2kpolicy.eps}
+	\end{subfigure} ~
+	\begin{subfigure}{0.45\textwidth}
+		\centering
+		\includegraphics[width = 0.95\linewidth]{ex2value.eps}
+	\end{subfigure}
+\end{figure}
+
+Simulation of the model for 2000 periods starting at the steady-state level shows that capital path is roughly levelled out over time with fluctuations due to productivity shocks. Simulation of the investment path depicts that irreversibility constraint never binds. The reason for this could be that consumer wants to smooth consumption over time. Hence, it is never optimal for a consumer to start eating up capital stock because it increases consumption today at the cost of permanently shifting consumption downwards in the (infinite) future. 
+
+\begin{figure}[h]
+	\centering
+	\begin{subfigure}{0.45\textwidth}
+		\centering
+		\includegraphics[width = 0.95\linewidth]{ex2kpath.eps}
+	\end{subfigure} ~
+	\begin{subfigure}{0.45\textwidth}
+		\centering
+		\includegraphics[width = 0.95\linewidth]{ex2ipath.eps}
+	\end{subfigure}
+\end{figure}
+
+\subsection{Shocks to depreciation of capital}
+
+Let $\delta_t(s_t)$ denote the realization of the stochastic shock to the depreciation rate at time $t$. Since we are given that the depreciation rate follows a stationary Markov process, the allocations are history-independent. Combining the law of motion and the resource constraint we get $c_t(s_t) + K_{t+1} = f(K_t) + (1 - \delta_t(s_t))K_t$. Thus, the planner's problem is to
+
+\begin{equation}
+	\begin{split}
+		\max\limits_{\{c_t(s_t)\}_{t = 0}^\infty}\sum\limits_{t = 0}^\infty\sum\limits_{s^t}\beta^t\pi_t(s^t)\frac{(c_t(s_t))^{1 - \sigma} + 1}{1 - \sigma}\text{ s.t. }&c_t(s_t) + K_{t + 1} = f(K_t) + (1 - \delta_t(s_t))K_t \nonumber \\
+		&c_t(s_t)\geq 0, \forall t \\
+		&K_0 \text{ given}
+	\end{split}
+\end{equation}
+
+The planner's problem could be written recursively as
+
+
+
 \subsection{Endogenous labour supply}
 
 \subsubsection{}
