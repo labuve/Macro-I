@@ -43,7 +43,7 @@
 \subsubsection{}
 \begin{itemize}
 	\item time is discrete and infinite
-	\item Define $s_t\in W$ the realization of a stochastic event that defines the wage rate. Hence, history of events is denoted as $s^t$. Define as well the associated transition matrix, $P(s_{t+1}|s_t)$ and the unconditional probability of each history $s^t$ at time $t$, $\pi_t(s^t)$.
+	\item Define $s_t\in\mathcal{W}$ the realization of a stochastic event that defines the wage rate. Hence, history of events is denoted as $s^t$. Define as well the associated transition matrix, $P(s_{t+1}|s_t)$ and the unconditional probability of each history $s^t$ at time $t$, $\pi_t(s^t)$.
 	\item Household values $\mathbb{E}_0\sum\limits_{t = 0}^\infty\beta^t[\ln(c_t(s^t)) - (1 - l_t(s^t))] = \sum\limits_{t = 0}^\infty\sum\limits_{s^t}\beta^t\pi_t(s^t)[\ln(c_t(s^t)) - n_t(s^t)], \quad\beta\in(0, 1)$. Notice that period utility is a  $\mathcal{C}^2$, increasing in both $c_t(s^t)$ and $l_t(s^t)$, and a concave function. Furthermore, period utility function satisfies Inada condition with respect to consumption, but not with respect to leisure: $\lim\limits_{c\to0}u_c(c, l) = \lim\limits_{c\to0}\frac{1}{c} = \infty, \forall c$, $\lim\limits_{l\to0}u_l(c, l) = \lim\limits_{l\to0}1 = 1, \forall l$.
 	\item At time $t$ and history $s^t$, a consumer is paid $w_t(s_t)$. Notice, that wage is said to follow Markov process, i.e., is history-independent. Therefore, the allocations in the economy are as well history-independent.
 	\item Although not directly specified by the problem, I assume sequential trade market structure. Define $a_{t+1}(s^t, s_{t+1})$ the amount of claims on time $t+1$, history $s^{t+1}$ consumption bought at time $t$, history $s^t$.
@@ -53,6 +53,7 @@
 			\max\limits_{\{c_t(s_t), n_t(s_t), a_{t+1}(s_t, s_{t+1})\}_{t = 0}^\infty}&\sum\limits_{t = 0}^\infty\beta^t\sum\limits_{s^t}\pi_t(s^t)[\ln(c_t(s_t)) - n_t(s_t)]\text{ s.t. }\\
 			&c_t(s_t) + \sum\limits_{s_{t+1}|s^t}\frac{a_{t+1}(s_t, s_{t+1})}{1+r} = w_t(s_t)n_t(s_t) + a_t(s_t), \qquad\forall t, \forall s^t\nonumber\\
 			&a_{t+1}(s_t, s_{t+1}) \geq B, \qquad \forall t, \forall s_t, \forall s_{t+1}\\
+			&n_t(s_t)\in[0, 1], \qquad \forall t, \forall s_t\\
 			&a_0(s_0) = 0
 		\end{split}
 	\end{equation}
@@ -60,29 +61,64 @@
 Hence, the problem could be written recursively as 
 \begin{equation}
 	\begin{split}
-		V(a, s) = \max\limits_{c, n, a'}\{\ln(c) - n + \beta\sum\limits_{s'\in W}P(s'|s)V(a'(s'), s')\}\text{ s.t. }&c + \sum\limits_{s'\in W}\frac{a'(s')}{1 + r} = w(s)n + a \nonumber \\
-		& a'(s')\geq B,  \qquad\forall s'\in W
-		\intertext{or}
-		V(a, s) = \max\limits_{n, a'}\begin{Bmatrix}\ln\begin{pmatrix}w(s)n + a - \sum\limits_{s'\in W}\frac{a'(s')}{1 + r}\end{pmatrix} - n + \beta\sum\limits_{s'\in W}P(s'|s)V(a'(s'), s')\end{Bmatrix}\text{ s.t. } & a'(s')\geq B,  \quad\forall s'\in W
+		V(a, w) = \max\limits_{c, n, a'}\{\ln(c) - n + \beta\sum\limits_{w'\in\mathcal{W}}P(w'|w)V(a'(w'), w')\}\text{ s.t. }&c + \sum\limits_{w'\in\mathcal{W}}\frac{a'(w')}{1 + r} = wn + a\qquad(\mu_1) \nonumber \\
+		& n\geq 0\qquad(\mu_2),  \qquad\forall w\in\mathcal{W} \\
+		& n\leq 1\qquad(\mu_3),  \qquad\forall w\in\mathcal{W} \\
+		& a'(w')\geq B\qquad(\mu_4),  \qquad\forall w'\in\mathcal{W}
 	\end{split}
 \end{equation}
 
 \subsubsection{}
-If $B$ is the natural debt limit, then the borrowing constraint will never bind. Suppose it does, which then implies that the household will be bound to consume 0 for the rest of infinite life. However, consumer's period utility satisfies Inada condition with respect to consumption, i.e., even a slightest deviation form zero constitutes a vast utility improvement. Hence, at equilibrium consumer will never want to have zero consumption.
+If $B$ is the natural debt limit, then the borrowing constraint will never bind. Suppose it does, which then implies that the household will be bound to consume nothing for the rest of infinite life. However, consumer's period utility satisfies Inada condition with respect to consumption, i.e., even a slightest deviation form zero constitutes a vast utility improvement. Hence, at equilibrium consumer will never wants to have zero consumption.
 
 \subsubsection{}
-Policy functions for the household are given by $\sigma^c(a, s), \sigma^n(a, s), \sigma^a(a, s, s')$. Then, the FOCs are:
+Here I continue assuming that $B$ is the natural debt limit. Hence, $\mu_4 = 0$. Policy functions for the household are given by $\sigma^c(a, w), \sigma^n(a, w), \sigma^a(a, w, w')$. Then, the FOCs are:
 \begin{equation}
 	\begin{split}
-		\frac{1}{\sigma^c(a, s)}& = \mu \\ \nonumber
-		-1 + \mu w(s) = -1 + \frac{w(s)}{\sigma^c(a, s)}& \\
+		\frac{1}{\sigma^c(a, w)}& = \mu_1 \\ \nonumber
+		-1 + \mu_1 w + \mu_2 - \mu_3& = 0 \\
 		\begin{matrix}
-		&\frac{\mu}{1 + r} = \beta P(s'|s)\frac{\partial V(a'(s'), s')}{\partial a'(s')}\\
-		&\frac{\partial V(a, s)}{\partial a} = \mu
-		\end{matrix}& \Longrightarrow \frac{1}{1 + r} = \beta P(s'|s) \frac{\sigma^c(a, s)}{\sigma^c(\sigma^a(a, s, s'), s')}
+		&\beta P(w'|w)\frac{\partial V(a'(w'), w')}{\partial a'(w')} = \frac{\mu_1}{1 + r} + \mu_4\\
+		&\frac{\partial V(a, w)}{\partial w} = \mu_1
+		\end{matrix} \Longrightarrow \frac{1}{1 + r}& = \beta P(w'|w) \frac{\sigma^c(a, w)}{\sigma^c(\sigma^a(a, w, w'), w')}\\
+		\sigma^c(a, w) + \sum\limits_{w'\in\mathcal{W}}\frac{\sigma^a(a, w, w')}{1 + r}& = w\sigma^n(a, w) + a\\
+		\min(\mu_2, \sigma^n(a, w))& = 0 \\
+		\min(\mu_3, 1 - \sigma^n(a, w))& = 0
 	\end{split}
 \end{equation}
 
+For all interior solutions $\sigma^n(a, w)\in(0, 1)$, $\mu_2 = \mu_3 = 0$ the following conditions should hold true
+\begin{equation}
+	\begin{split}
+		\frac{1}{\sigma^c(a, w)}& = \mu_1 \\
+		\frac{w}{\sigma^c(a, w)}& = 1 \\
+		\frac{1}{1 + r}& = \beta P(w'|w) \frac{\sigma^c(a, w)}{\sigma^c(\sigma^a(a, w, w'), w')}
+		\label{eq:ex1intfoc}
+	\end{split}
+\end{equation}
+
+Suppose now that $\sigma^n(a, w) = 0 \Longrightarrow \mu_2\geq 0, \mu_3 = 0$. Then, the second FOC could be rewritten as
+\begin{equation}
+	\begin{split}
+		\frac{w}{\sigma^c(a, w)} + \mu_2& = 1 \Longrightarrow \underbrace{\frac{w}{\sigma^c(a, w)}}_{\substack{\text{marginal benefit of}\\\text{a unit of labour}}} \leq \underbrace{1}_{\substack{\text{marginal disutility of}\\\text{a unit of labour}}} \nonumber
+	\end{split}
+\end{equation}
+In other words, consumer chooses to supply zero hours of labour if a marginal benefit of labour is always lower than a marginal utility cost (or disutility) of working. The left-hand side of the inequality above is a marginal benefit, because an extra hour of work earns consumer a wage of $w$, which could be spent on consumption with marginal utility of $\frac{1}{\sigma^c(a, w)}$. 
+
+Suppose that $\sigma^n(a, w) = 1 \Longrightarrow \mu_2 = 0, \mu_3\geq 0$. Then, the FOC with respect to leisure is
+\begin{equation}
+	\begin{split}
+		\frac{w}{\sigma^c(a, w)} - \mu_3& = 1 \Longrightarrow \underbrace{\frac{w}{\sigma^c(a, w)}}_{\substack{\text{marginal benefit of}\\\text{a unit of labour}}} \geq \underbrace{1}_{\substack{\text{marginal disutility of}\\\text{a unit of labour}}} \nonumber
+	\end{split}
+\end{equation}
+Hence, quite unsurprisingly, if the marginal benefit of working extra hour exceeds a (constant) utility cost of labour, then the consumer wants to supply as much of labour as possible, i.e., $\sigma^n(a, w) = 1$.
+
+Summarizing the above, the optimal policy for labour could be described as follows
+\begin{enumerate}[label=\alph*)]
+	\item if $\frac{w}{\sigma^c(a, w)} \leq 1 \Rightarrow \sigma^n(a, w) = 0$;
+	\item if $\frac{w}{\sigma^c(a, w)} \geq 1 \Rightarrow \sigma^n(a, w) = 1$;
+	\item if $\frac{w}{\sigma^c(a, w)} = 1$, then, $\sigma^n(a, w)$ is pinned down by FOCs in \eqref{eq:ex1intfoc} and the budget constraint.
+\end{enumerate}
 
 \subsection{Irreversible capital accumulation}
 
@@ -111,17 +147,28 @@ Combining the FOCs and the envelope condition we get
 	\underbrace{\beta\mathbb{E}_{a'|a}\begin{bmatrix}\frac{a'\alpha(k')^{\alpha - 1} + 1 - \delta}{c'}\end{bmatrix}}_{\substack{\text{discounted expected marginal} \\ \text{benefit of consumption tomorrow}}} + \underbrace{\lambda - \beta\lambda'(1 - \delta)}_{(*)} = \underbrace{\frac{1}{c}}_{\substack{\text{marginal benefit of}\\\text{consumption today}}}
 	\label{eq:ex2finfoc}
 \end{equation}
-(*) It seems to me that this expression gives an intertemporal value of relaxing irreversibility constraint today versus tomorrow. In a sense, due to depreciation of capital it is "easier" to relax irreversibility constraint in the future than today, but subject to discounting as it takes place in the future. 
-
-Suppose that $k' > (1 - \delta)k \Rightarrow \lambda = 0$. Then, \eqref{eq:ex2finfoc} turns into an Euler equation in standard RBC model:
+(*) It seems to me that this expression gives an intertemporal value of relaxing irreversibility constraint today versus tomorrow. In a sense, due to depreciation of capital it is "easier" to relax irreversibility constraint in the future than today, but subject to discounting as it takes place in the future.\\
+\\
+Suppose that $k' > (1 - \delta)k, k'' > (1 - \delta)k \Rightarrow \lambda = \lambda' = 0$. Then, \eqref{eq:ex2finfoc} turns into an Euler equation in standard RBC model:
 \begin{equation}
 	\beta\mathbb{E}_{a'|a}\begin{bmatrix}\frac{a'\alpha(k')^{\alpha - 1} + 1 - \delta}{c'}\end{bmatrix} = \frac{1}{c} \nonumber
 \end{equation}
-Now it is easier to see that if $\lambda > 0 \Rightarrow k' = (1 - \delta)k$, then an agent ideally would want to start eating up the capital stock, but cannot. Hence, an agent ends up with higher $k'$ and lower $c$ compared to the standard case with reversible investment. This means that
+Now, consider the following cases:
+\begin{itemize}
+	\item when $k' = (1 - \delta)k$, but $k'' > (1 - \delta)k'$, i.e., $\lambda > 0, \lambda' = 0$; and
+	\item  when both $k' = (1 - \delta)k, k'' = (1 - \delta)k'$, i.e., $\lambda > 0,  \lambda' > 0$. As argued above, over time the irreversibility constraint gets weaker due to depreciation. Thus, one could expect $\lambda - \beta\lambda'(1 - \delta)$ to be positive.
+\end{itemize}
+Then, an agent ideally would want to start eating up the capital stock, but cannot. This means that
 \begin{equation}
 	\beta\mathbb{E}_{a'|a}\begin{bmatrix}\frac{a'\alpha(k')^{\alpha - 1} + 1 - \delta}{c'}\end{bmatrix} < \frac{1}{c} \nonumber
 \end{equation}
-, i.e., again consumer would have been better off consuming more today, but is bound to postpone consumption to the future period.
+, i.e., a consumer would have been better off consuming more today, but is bound to postpone consumption to the future period.
+
+In case when $k' > (1 - \delta)k$, but $k'' = (1 - \delta)k'$, i.e., $\lambda = 0, \lambda' > 0$, an agent ideally wants to start eating up the capital stock tomorrow. This implies
+\begin{equation}
+	\beta\mathbb{E}_{a'|a}\begin{bmatrix}\frac{a'\alpha(k')^{\alpha - 1} + 1 - \delta}{c'}\end{bmatrix} > \frac{1}{c} \nonumber
+\end{equation}
+, i.e., the consumer would have been better off consuming more tomorrow, but because of investment irreversibility cannot do so and is forced to expedite consumption.
 
 \subsubsection{}
 As long as the depreciation rate of capital $\delta > 0$, irreversibility constraint does not affect the non-stochastic steady-state of capital $k^*$.
