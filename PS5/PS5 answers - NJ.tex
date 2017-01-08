@@ -174,118 +174,226 @@ Simulation of the model for 2000 periods starting at the steady-state level show
 
 \subsection{Shocks to depreciation of capital}
 
-Let $\delta_t(s_t)$ denote the realization of the stochastic shock to the depreciation rate at time $t$. Since we are given that the depreciation rate follows a stationary Markov process, the allocations are history-independent. Combining the law of motion and the resource constraint we get $c_t(s_t) + K_{t+1} = f(K_t) + (1 - \delta_t(s_t))K_t$. Thus, the planner's problem is to
+\subsubsection{}
+
+Let $\delta_t(s_t)$ denote the realization of the stochastic shock to the depreciation rate at time $t$. Since we are given that the depreciation rate follows a stationary Markov process, the allocations are history-independent. Combining the law of motion and the resource constraint we get $c_t(s_t) + K_{t+1}(s_t) = f(K_t(s_{t-1})) + (1 - \delta_t(s_t))K_t(s_{t-1})$. Thus, the planner's problem is to
 
 \begin{equation}
 	\begin{split}
-		\max\limits_{\{c_t(s_t)\}_{t = 0}^\infty}\sum\limits_{t = 0}^\infty\sum\limits_{s^t}\beta^t\pi_t(s^t)\frac{(c_t(s_t))^{1 - \sigma} + 1}{1 - \sigma}\text{ s.t. }&c_t(s_t) + K_{t + 1} = f(K_t) + (1 - \delta_t(s_t))K_t \nonumber \\
-		&c_t(s_t)\geq 0, \forall t \\
+		\max\limits_{\{c_t(s_t), K_{t+1}(s_t)\}_{t = 0}^\infty}\sum\limits_{t = 0}^\infty\sum\limits_{s^t}\beta^t\pi_t(s^t)\frac{(c_t(s_t))^{1 - \sigma} + 1}{1 - \sigma}\text{ s.t. }&c_t(s_t) + K_{t+1}(s_t) = f(K_t(s_{t-1})) + (1 - \delta_t(s_t))K_t(s_{t-1}), \quad\forall t, \forall s^t \nonumber \\
+		&c_t(s_t)\geq 0, \quad\forall t, \forall s_t \\
 		&K_0 \text{ given}
 	\end{split}
 \end{equation}
 
 The planner's problem could be written recursively as
-
-
-
-\subsection{Endogenous labour supply}
-
-\subsubsection{}
-The planner's problem sequentially:
 \begin{equation}
 	\begin{split}
-		\mathcal{L}& = \sum\limits_{t = 0}^T\beta^t\begin{Bmatrix}\ln(c_t) - \ln(n_t) + \mu_t\begin{pmatrix}n_t^\alpha k_t^{1 - \alpha} + (1 - \delta)k_t - k_{t+1} - c_t\end{pmatrix}\end{Bmatrix} \nonumber \\
-		\intertext{FOCs:}
-		&\begin{cases}
-			\frac{\partial\mathcal{L}}{\partial c_t}& = \beta^t\begin{Bmatrix}\frac{1}{c_t} - \mu_t\end{Bmatrix} = 0, \qquad
-			\forall t\leq T - 1 \\
-			\frac{\partial\mathcal{L}}{\partial n_t}& = \beta^t\begin{Bmatrix}-\frac{1}{n_t} + \mu_t\alpha n_t^{\alpha - 1}k_t^{1 - \alpha}\end{Bmatrix} = 0, \qquad\forall t\leq T - 1 \\
-			\frac{\partial\mathcal{L}}{\partial k_{t+1}}& = -\beta^t\mu_t + \beta^{t+1}\mu_{t+1}\begin{pmatrix}(1 - \alpha)n_{t+1}^\alpha k_{t+1}^{ - \alpha} + 1 - \delta\end{pmatrix} = 0, \qquad\forall t\leq T - 1 \\
-			\frac{\partial\mathcal{L}}{\partial \mu_t}& = \beta^t\begin{pmatrix}n_t^\alpha k_t^{1 - \alpha} + (1 - \delta)k_t - k_{t+1} - c_t\end{pmatrix} = 0, \qquad\forall t\leq T-1
-		\end{cases} \Rightarrow 
-		\begin{cases}
-			\frac{1}{c_t}& = \mu_t \\
-			c_t& =  \alpha n_t^\alpha k_t^{1 - \alpha} \\
-			\frac{1}{c_t}& = \beta\frac{1}{c_{t+1}}\begin{pmatrix}(1 - \alpha) \begin{pmatrix}\frac{k_{t+1}}{n_{t+1}}\end{pmatrix}^{-\alpha} + 1 - \delta\end{pmatrix} \\
-			c_t + k_{t+1}& = n_t^\alpha k_t^{1 - \alpha} + (1 - \delta)k_t
-		\end{cases}
-		\intertext{Using the intratemporal FOC and resource constraint we get the following}
-		&\begin{cases}
-			c_t =  \alpha n_t^\alpha k_t^{1 - \alpha} \\
-			(1 - \alpha)n_t^\alpha k_t^{1 - \alpha} = k_{t + 1} - (1 - \delta)k_t
-		\end{cases} \Rightarrow \begin{cases}
-			c_t =  \alpha n_t^\alpha k_t^{1 - \alpha} \\
-			n_t  = \begin{bmatrix}
-			\frac{k_{t + 1} - (1 - \delta)k_t}{(1 - \alpha)k_t^{1 - \alpha}}
-			\end{bmatrix}^{\frac{1}{\alpha}}
-		\end{cases} \Rightarrow \begin{cases}
-			c_t = \frac{\alpha}{1 - \alpha}\begin{bmatrix}k_{t + 1} - (1 - \delta)k_t\end{bmatrix} \\
-			n_t  = \begin{bmatrix}
-			\frac{k_{t + 1} - (1 - \delta)k_t}{(1 - \alpha)k_t^{1 - \alpha}}
-			\end{bmatrix}^{\frac{1}{\alpha}}
-		\end{cases}
-		\intertext{Hence,}
-		&\begin{cases}
-			\tilde{c}(k_t, k_{t+1})& = \frac{\alpha}{1 - \alpha}\begin{bmatrix}k_{t + 1} - (1 - \delta)k_t\end{bmatrix}, \quad\forall t\leq T - 1 \\
-			\tilde{n}(k_t, k_{t+1})& = \begin{bmatrix}
-			\frac{k_{t + 1} - (1 - \delta)k_t}{(1 - \alpha)k_t^{1 - \alpha}}
-			\end{bmatrix}^{\frac{1}{\alpha}}, \quad\forall t\leq T - 1
-		\end{cases}
+		V(K, s)& = \max\limits_{K'}\frac{(f(K) + (1-\delta(s))K - K')^{1 - \sigma} + 1}{1 - \sigma} + \beta\sum\limits_{s'|s}P(s'|s)V(K', s') \nonumber
+		\intertext{FOC:}
+		&\beta\sum\limits_{s'|s}P(s'|s)\frac{\partial V(K', s')}{\partial K'} = (f(K) + (1-\delta(s))K - K')^{-\sigma} \\
+		\text{Envelope condition: }&\frac{\partial V(K, s)}{\partial K} = (f(K) + (1-\delta(s))K - K')^{-\sigma}(f'(K) + 1-\delta(s)) \Longrightarrow\\
+		&\beta\sum\limits_{s'|s}P(s'|s)(f(K') + (1-\delta(s'))K' - K'')^{-\sigma}(f'(K') + 1-\delta(s')) = (f(K) + (1-\delta(s))K - K')^{-\sigma}\\
+		&\underbrace{\beta\sum\limits_{s'|s}P(s'|s)(c')^{-\sigma}(f'(K') + 1-\delta(s'))}_{\substack{\text{discounted expected marginal benefit}\\\text{of consumption tomorrow}}} = \underbrace{c^{-\sigma}}_{\substack{\text{marginal benefit of}\\\text{consumption today}}}
 	\end{split}
 \end{equation}
 
-Since the utility function is strictly increasing in $c_t$ nd decreasing in $n_t$, in the terminal period $t = T$, the following conditions hold:
+\subsubsection{}
+
+Define $q_t^0(s^t)$ as the price at time $t = 0$ of a claim on consumption at time $t$ and state $s_t$ (recall that allocations and prices in this problem are history-independent). Household seeks to maximize expected discounted lifetime utility subject to the budget constraint at given prices:
 \begin{equation}
 	\begin{split}
-		k_{T + 1}& = 0 \\
-		n_T& = 0 \\
-		c_T& = (1 - \delta)k_T
-	\end{split}\nonumber
-\end{equation}
-
-%To write the planner's problem recursively, define the constrain sets for consumption, labour and capital: $n_t\in[0, 1]$, $c_{t}\in B(k_t):=[0, k_t^{1 - \alpha} + (1 - \delta)k_t]$, and $k_{t+1}\in\Gamma(k_t):=[0, k_t^{1 - \alpha} + (1 - \delta)k_t]$.
-
-The planner's problem recursively:
-
-\begin{equation}
-	\begin{split}
-		V_{s}(k_{T - s})& = \max\limits_{n_{T - s}, c_{T - s}}\ln(c_{T - s}) - \ln(n_{T - s}) + \beta V_{s-1}(n_{T - s}^\alpha k_{T - s}^{1 - \alpha} + (1 - \delta)k_{T - s} - c_{T - s}) \nonumber \\
-		\intertext{FOCs:}
-		&\begin{cases}
-			\frac{1}{c_t}& = \beta V_{s - 1}'(n_t^\alpha k_t^{1 - \alpha} + (1 - \delta)k_t - c_t), \qquad\forall t\leq T - 1 \\
-			\frac{1}{n_t}& = \beta\alpha n_t^{\alpha - 1}k_t^{1 - \alpha}V_{s - 1}'(n_t^\alpha k_t^{1 - \alpha} + (1 - \delta)k_t - c_t), \qquad\forall t\leq T - 1 \\
-		\end{cases}	
+		\max\limits_{\{\{c_t(s_t)\}_{s_t}\}_{t = 0}^\infty}\sum\limits_{t = 0}^\infty\sum\limits_{s^t}\beta^t\pi_t(s^t)\frac{(c_t(s_t))^{1 - \sigma} + 1}{1 - \sigma}\text{ s.t. }\sum\limits_{t = 0}^\infty\sum\limits_{s^t} q_t^0(s_t)c_t(s_t) = \sum\limits_{t = 0}^\infty\sum\limits_{s^t}w_t^0(s_t) + p_{k_0}k_0 \nonumber
 	\end{split}
 \end{equation}
 
-To proceed further, one needs to know the functional form of the value functions at each point in time. It seems to me that I'd need to use value function iteration or guess and verify to obtain functional forms of the value functions and optimal decision rules. Envelope condition does not apply because in a finite horizon, value functions do differ across time. So, for the numerical part I continue using first-order conditions derived from sequential problem as both problems should yield same result.
+Type I (production) firm chooses capital and labour force to maximize profit:
+\begin{equation}
+	\begin{split}
+		\max\limits_{\{\{k_t^I(s_t), n_t^I(s_t)\}_{s_t}\}_{t = 0}^\infty}\sum\limits_{t = 0}^\infty\sum\limits_{s_t}q_t^0(s_t)F(k_t^I(s_t), n_t^I(s_t)) - w_t^0(s_t)n_t^I(s_t) - r_t^0(s_t)k_t^I(s_t) \nonumber
+	\end{split}
+\end{equation}
+
+Type II (investment) firm decides how much capital to rent out to the production firm and how much of initial capital to buy from the consumer. Hence, investment firm's problem:
+\begin{equation}
+	\begin{split}
+		\max\limits_{\{\{k_0^{II}, k_{t+1}^{II}(s_t)\}_{s_t}\}_{t = 0}^\infty} -p_{k_0}k_0^{II} + \sum\limits_{t = 0}^\infty\sum\limits_{s_t}\{r_t^0(s_t)k_t^{II}(s_{t-1}) - q_t^0(s_t)[k_{t+1}^{II}(s_t) - (1 - \delta(s_t))k_t^{II}(s_{t-1})]\} \nonumber
+	\end{split}
+\end{equation}
+
+An Arrow-Debreu competitive equilibrium is a sequence of prices $\{\{q_t^0(s_t), w_t^0(s_t), r_t^0(s_t), p_{k_0}\}_{s_t}\}_{t = 0}^\infty$ and allocations $\{\{c_t(s_t), k_t^I(s_t), n_t^I(s_t), k_{t+1}^{II}(s_t)\}\}$ such that
+\begin{enumerate}[label=\roman*)]
+	\item the allocations solve the maximization problems of households, Type I and Type II firms at a given $k_0$ and taking prices as given;
+	\item prices are such that markets clear:
+	\begin{equation}
+		\begin{split}
+			n_t^I(s_t)& = 1 \\ \nonumber
+			k_t^I(s_t)& = k_t^{II}(s_{t-1}) \equiv k_t \\
+			f(k_t) =: F(k_t, 1)& = c_t(s_t) + k_{t+1} - (1 - \delta(s_t))k_t
+		\end{split}
+	\end{equation}
+\end{enumerate}
+Since preferences are locally nonsatiated, markets are complete and there is a free disposal of output, we can apply First fundamental welfare theorem, which says that a competitive equilibrium allocation is also a Pareto efficient allocation.
 
 \subsubsection{}
+We forgo the $s$ notation and let the uncertainty to be captured by realization of $\delta_t\in\Delta$ with transition probabilities $P(\delta'|\delta)$. The aggregate state of the economy is given by $X \equiv (\delta, K)\in\mathcal{X}\equiv\Delta\times\mathbb{R}_+$. Define as well perceived law of motion for the aggregate state $X' = \hat{\Pi}(X'|X)$, which is made up of the perceived law of motion for the aggregate capital $K' = G(X)$ and a belief about evolution of the depreciation rate $\hat{P}(\delta'|\delta)$. We also assume there's a sequential trade of Arrow securities with a price today at aggregate state $X$ of a claim on consumption tomorrow when $\delta'$ realizes, $Q:\mathcal{X}\times\Delta\to\mathbb{R}, (X, \delta')\mapsto Q(\delta'|X)$. Let $a$ stand for the amount of Arrow securities at the current state $X$. Rental rate of capital and wage rate are defined as follows: $r: \mathcal{X}\to\mathbb{R}, X\mapsto r(X)$ and $w:\mathcal{X}\to\mathbb{R}, X\mapsto w(X)$, respectively.
 
-Using the FOC in the previous part, numerical solution yields the following paths for capital, labour and consumption. Notice that optimal choice of capital for the next period is constant over time until it drops to zero when the world ends. Unlike the very simple finite-horizon growth model considered in Problem Set 1, social planner chooses the keep the stock of capital constant because \begin{enumerate*}[label=\roman*)]\item a unit of labour supplied results in higher disutility to the agent than an increase in the capital stock, and \item a lower supply of labour will result in gradual decrease of capital stock and a lower consumption plan for an agent \end{enumerate*}. Using results from the previous part, one can show that $k_{t+1} = k_t \Longrightarrow n_t = k_t\begin{pmatrix}\frac{\delta}{1 - \alpha}\end{pmatrix}^{\frac{1}{\alpha}} \approx 0.04$ (see \Cref{fig:ex4npath}). This allows an agent to enjoy a constant consumption plan for almost an entire life, except the terminal period, when he/she consumes everything that is left before the world ends (see \Cref{fig:ex4cpath}).
+Then, household's problem could be written recursively as
+\begin{equation}
+	\begin{split}
+		V(a, X)& = \max\limits_{c, a'}\frac{c^{1 - \sigma} + 1}{1 - \sigma} + \beta\sum\limits_{\delta'\in\Delta}\hat{P}(\delta'|\delta)V(a'(\delta'), (\delta', G(X)))\text{ s.t. }c + \sum\limits_{\delta'\in\Delta}Q(\delta'|X)a'(\delta') = w(X) + a\nonumber\\
+		\text{FOCs: }&(\phi^c(a, X))^{-\sigma} = \mu \\
+		&\beta\hat{P}(\delta'|\delta)\frac{\partial V(\phi^{a'}(a, X, \delta'), (\delta', G(X)))}{\partial a'} = \mu Q(\delta'|X) \\
+		\text{Envelope condition: }&\frac{\partial V(a, X)}{\partial a} = \mu \Longrightarrow \\
+		& \beta\hat{P}(\delta'|\delta)(\phi^c(\phi^{a'}(a, X, \delta'), (\delta', G(X))))^{-\sigma} = (\phi^c(a, X))^{-\sigma} Q(\delta'|X)
+	\end{split}
+\end{equation}
 
-\begin{figure}[h]
-	\centering
-	\begin{subfigure}{0.5\textwidth}
-		\centering
-		\includegraphics[width = 0.95\linewidth]{kpath.eps}
-		\caption{Optimal capital path starting at $k_0 = 2$}
-		\label{fig:ex4kpath}
-	\end{subfigure}~
-	\begin{subfigure}{0.5\textwidth}
-		\centering
-		\includegraphics[width = 0.95\linewidth]{npath.eps}
-		\caption{Optimal path for labour with $k_0 = 2$}
-		\label{fig:ex4npath}
-	\end{subfigure}
-	\begin{subfigure}{0.5\textwidth}
-		\centering
-		\includegraphics[width = 0.95\linewidth]{cpath.eps}
-		\caption{Optimal consumption path with $k_0 = 2$}
-		\label{fig:ex4cpath}
-	\end{subfigure}
-	\caption{Numerical solution to optimal policy rules}
-	\label{fig:ex4}
-\end{figure}
+Type I firm's problem:
+\begin{equation}
+	\begin{split}
+		&\max_{k^I, n^I} F(k^I, n^I) - w(X)n^I - r(X)k^I \nonumber \\
+		\text{FOCs: }&F_k(k^I, n^I) = r(X) \\
+		&F_n(k^I, n^I) = w(X)
+	\end{split}
+\end{equation}
+
+Type II firm's problem:
+\begin{equation}
+	\begin{split}
+		\max\limits_{k^{II\prime}} &-k^{II\prime} + \sum\limits_{\delta^{\prime}\in\Delta}Q(\delta^{\prime}|X)\begin{bmatrix}r((\delta^{\prime}, G(X)))k^{II\prime} + (1 - \delta)k^{II\prime}\end{bmatrix} \nonumber \\
+		&1 = \sum\limits_{\delta^{\prime}\in\Delta}Q(\delta^{\prime}|X)\begin{bmatrix}r((\delta^{\prime}, G(X))) + 1 - \delta\end{bmatrix}
+	\end{split}
+\end{equation}
+
+Hence, a recursive competitive equilibrium is a price system $r(X), w(X), Q(\delta'|X)$, perceived laws of motion $G(X), \hat{P}(\delta'|\delta)$, household's value function $V(a, X)$ and policy functions $\phi^c(a, X), \phi^{a'}(a, X, \delta'), k^I(X), n^I(X), k^{II}(X)$ such that for a given $K_0$:
+\begin{enumerate}[label=\roman*)]
+	\item policy functions solve respective optimization problems of households, production and investment firms described above, taking prices and perceived laws of motion as given
+	\item markets clear
+	\begin{equation}
+		\begin{split}
+			k^I& = k^{II} = K \\ \nonumber
+			n^I& = 1 \\
+			c + K'& = f(K) + (1 - \delta)K \\
+			a& = (r(X) + 1 - \delta)K
+		\end{split}
+	\end{equation}
+	\item rational expectations
+	\begin{equation}
+		\begin{split}
+		\hat{P}(\delta'|\delta)& = P(\delta'|\delta) \\ \nonumber
+		G(X)& = \mathcal{G}(X)
+		\end{split}
+	\end{equation}
+	where $\mathcal{G}(X)$ is found by substituting asset/capital market clearing into budget constraint of the household, FOCs of firms' problems and using Euler's theorem
+	\begin{equation}
+		\begin{split}
+			c + K'\cancelto{1}{\sum\limits_{\delta'\in\Delta}Q(\delta'|X)(r(\delta', G(X)) + 1 - \delta')}& = w(X) + r(X)K + (1 - \delta)K \\ \nonumber
+			c + K'& = F(K, 1) + (1 - \delta)K \\
+			c + K'& = f(K) + (1 - \delta)K \\
+			K'& = f(K) + (1 - \delta)K - \phi^c((r(X)K + (1 - \delta)K, X) \equiv \mathcal{G}(X)\\
+		\end{split}
+	\end{equation}
+\end{enumerate}
+
+%\subsection{Endogenous labour supply (old)}
+%
+%\subsubsection{}
+%The planner's problem sequentially:
+%\begin{equation}
+%	\begin{split}
+%		\mathcal{L}& = \sum\limits_{t = 0}^T\beta^t\begin{Bmatrix}\ln(c_t) - \ln(n_t) + \mu_t\begin{pmatrix}n_t^\alpha k_t^{1 - \alpha} + (1 - \delta)k_t - k_{t+1} - c_t\end{pmatrix}\end{Bmatrix} \nonumber \\
+%		\intertext{FOCs:}
+%		&\begin{cases}
+%			\frac{\partial\mathcal{L}}{\partial c_t}& = \beta^t\begin{Bmatrix}\frac{1}{c_t} - \mu_t\end{Bmatrix} = 0, \qquad
+%			\forall t\leq T - 1 \\
+%			\frac{\partial\mathcal{L}}{\partial n_t}& = \beta^t\begin{Bmatrix}-\frac{1}{n_t} + \mu_t\alpha n_t^{\alpha - 1}k_t^{1 - \alpha}\end{Bmatrix} = 0, \qquad\forall t\leq T - 1 \\
+%			\frac{\partial\mathcal{L}}{\partial k_{t+1}}& = -\beta^t\mu_t + \beta^{t+1}\mu_{t+1}\begin{pmatrix}(1 - \alpha)n_{t+1}^\alpha k_{t+1}^{ - \alpha} + 1 - \delta\end{pmatrix} = 0, \qquad\forall t\leq T - 1 \\
+%			\frac{\partial\mathcal{L}}{\partial \mu_t}& = \beta^t\begin{pmatrix}n_t^\alpha k_t^{1 - \alpha} + (1 - \delta)k_t - k_{t+1} - c_t\end{pmatrix} = 0, \qquad\forall t\leq T-1
+%		\end{cases} \Rightarrow 
+%		\begin{cases}
+%			\frac{1}{c_t}& = \mu_t \\
+%			c_t& =  \alpha n_t^\alpha k_t^{1 - \alpha} \\
+%			\frac{1}{c_t}& = \beta\frac{1}{c_{t+1}}\begin{pmatrix}(1 - \alpha) \begin{pmatrix}\frac{k_{t+1}}{n_{t+1}}\end{pmatrix}^{-\alpha} + 1 - \delta\end{pmatrix} \\
+%			c_t + k_{t+1}& = n_t^\alpha k_t^{1 - \alpha} + (1 - \delta)k_t
+%		\end{cases}
+%		\intertext{Using the intratemporal FOC and resource constraint we get the following}
+%		&\begin{cases}
+%			c_t =  \alpha n_t^\alpha k_t^{1 - \alpha} \\
+%			(1 - \alpha)n_t^\alpha k_t^{1 - \alpha} = k_{t + 1} - (1 - \delta)k_t
+%		\end{cases} \Rightarrow \begin{cases}
+%			c_t =  \alpha n_t^\alpha k_t^{1 - \alpha} \\
+%			n_t  = \begin{bmatrix}
+%			\frac{k_{t + 1} - (1 - \delta)k_t}{(1 - \alpha)k_t^{1 - \alpha}}
+%			\end{bmatrix}^{\frac{1}{\alpha}}
+%		\end{cases} \Rightarrow \begin{cases}
+%			c_t = \frac{\alpha}{1 - \alpha}\begin{bmatrix}k_{t + 1} - (1 - \delta)k_t\end{bmatrix} \\
+%			n_t  = \begin{bmatrix}
+%			\frac{k_{t + 1} - (1 - \delta)k_t}{(1 - \alpha)k_t^{1 - \alpha}}
+%			\end{bmatrix}^{\frac{1}{\alpha}}
+%		\end{cases}
+%		\intertext{Hence,}
+%		&\begin{cases}
+%			\tilde{c}(k_t, k_{t+1})& = \frac{\alpha}{1 - \alpha}\begin{bmatrix}k_{t + 1} - (1 - \delta)k_t\end{bmatrix}, \quad\forall t\leq T - 1 \\
+%			\tilde{n}(k_t, k_{t+1})& = \begin{bmatrix}
+%			\frac{k_{t + 1} - (1 - \delta)k_t}{(1 - \alpha)k_t^{1 - \alpha}}
+%			\end{bmatrix}^{\frac{1}{\alpha}}, \quad\forall t\leq T - 1
+%		\end{cases}
+%	\end{split}
+%\end{equation}
+%
+%Since the utility function is strictly increasing in $c_t$ nd decreasing in $n_t$, in the terminal period $t = T$, the following conditions hold:
+%\begin{equation}
+%	\begin{split}
+%		k_{T + 1}& = 0 \\
+%		n_T& = 0 \\
+%		c_T& = (1 - \delta)k_T
+%	\end{split}\nonumber
+%\end{equation}
+%
+%%To write the planner's problem recursively, define the constrain sets for consumption, labour and capital: $n_t\in[0, 1]$, $c_{t}\in B(k_t):=[0, k_t^{1 - \alpha} + (1 - \delta)k_t]$, and $k_{t+1}\in\Gamma(k_t):=[0, k_t^{1 - \alpha} + (1 - \delta)k_t]$.
+%
+%The planner's problem recursively:
+%
+%\begin{equation}
+%	\begin{split}
+%		V_{s}(k_{T - s})& = \max\limits_{n_{T - s}, c_{T - s}}\ln(c_{T - s}) - \ln(n_{T - s}) + \beta V_{s-1}(n_{T - s}^\alpha k_{T - s}^{1 - \alpha} + (1 - \delta)k_{T - s} - c_{T - s}) \nonumber \\
+%		\intertext{FOCs:}
+%		&\begin{cases}
+%			\frac{1}{c_t}& = \beta V_{s - 1}'(n_t^\alpha k_t^{1 - \alpha} + (1 - \delta)k_t - c_t), \qquad\forall t\leq T - 1 \\
+%			\frac{1}{n_t}& = \beta\alpha n_t^{\alpha - 1}k_t^{1 - \alpha}V_{s - 1}'(n_t^\alpha k_t^{1 - \alpha} + (1 - \delta)k_t - c_t), \qquad\forall t\leq T - 1 \\
+%		\end{cases}	
+%	\end{split}
+%\end{equation}
+%
+%To proceed further, one needs to know the functional form of the value functions at each point in time. It seems to me that I'd need to use value function iteration or guess and verify to obtain functional forms of the value functions and optimal decision rules. Envelope condition does not apply because in a finite horizon, value functions do differ across time. So, for the numerical part I continue using first-order conditions derived from sequential problem as both problems should yield same result.
+%
+%\subsubsection{}
+%
+%Using the FOC in the previous part, numerical solution yields the following paths for capital, labour and consumption. Notice that optimal choice of capital for the next period is constant over time until it drops to zero when the world ends. Unlike the very simple finite-horizon growth model considered in Problem Set 1, social planner chooses the keep the stock of capital constant because \begin{enumerate*}[label=\roman*)]\item a unit of labour supplied results in higher disutility to the agent than an increase in the capital stock, and \item a lower supply of labour will result in gradual decrease of capital stock and a lower consumption plan for an agent \end{enumerate*}. Using results from the previous part, one can show that $k_{t+1} = k_t \Longrightarrow n_t = k_t\begin{pmatrix}\frac{\delta}{1 - \alpha}\end{pmatrix}^{\frac{1}{\alpha}} \approx 0.04$ (see \Cref{fig:ex4npath}). This allows an agent to enjoy a constant consumption plan for almost an entire life, except the terminal period, when he/she consumes everything that is left before the world ends (see \Cref{fig:ex4cpath}).
+%
+%\begin{figure}[h]
+%	\centering
+%	\begin{subfigure}{0.5\textwidth}
+%		\centering
+%		\includegraphics[width = 0.95\linewidth]{kpath.eps}
+%		\caption{Optimal capital path starting at $k_0 = 2$}
+%		\label{fig:ex4kpath}
+%	\end{subfigure}~
+%	\begin{subfigure}{0.5\textwidth}
+%		\centering
+%		\includegraphics[width = 0.95\linewidth]{npath.eps}
+%		\caption{Optimal path for labour with $k_0 = 2$}
+%		\label{fig:ex4npath}
+%	\end{subfigure}
+%	\begin{subfigure}{0.5\textwidth}
+%		\centering
+%		\includegraphics[width = 0.95\linewidth]{cpath.eps}
+%		\caption{Optimal consumption path with $k_0 = 2$}
+%		\label{fig:ex4cpath}
+%	\end{subfigure}
+%	\caption{Numerical solution to optimal policy rules}
+%	\label{fig:ex4}
+%\end{figure}
 
 \end{document}

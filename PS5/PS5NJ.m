@@ -164,9 +164,9 @@ saveas(gcf,'ex2ipath','epsc')
 alpha = 2/3;        % labour share of output
 beta = 0.95;        % patience parameter
 delta = 0.025;      % depreciation rate
-T = 60;             % number of time periods
+T = 100;            % number of time periods
 k0 = 2;             % starting level of capital
-N = 100;            % number of capital grid-points
+N = 200;            % number of capital grid-points
 tolv = 1e-5;        % tolerance for value function iteration
 
 % capital grid
