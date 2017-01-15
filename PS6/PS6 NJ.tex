@@ -1,0 +1,60 @@
+\documentclass[]{article}
+\usepackage{amsmath, amsfonts}
+\usepackage[inline]{enumitem}
+\usepackage{fancyhdr}
+\usepackage{geometry}
+\usepackage{cancel}
+\usepackage{graphicx}
+\usepackage{color}
+\usepackage{subcaption}
+\usepackage{cleveref}
+\usepackage{MnSymbol,wasysym}
+\usepackage{titlesec}
+
+%opening
+\title{Problem Set VI \\ \large Macroeconomics I}
+\author{Nurfatima Jandarova}
+\date{\today}
+\pagestyle{fancy}
+
+\lhead{Macroeconomics I, Problem Set VI}
+\rhead{Nurfatima Jandarova}
+\renewcommand{\headrulewidth}{0.4pt}
+\fancyheadoffset{1 cm}
+
+\geometry{a4paper, left=20mm, top=20mm, bottom = 20mm, headheight=20mm}
+
+\sloppy
+\definecolor{lightgray}{gray}{0.5}
+\setlength{\parindent}{0pt}
+
+\renewcommand{\thesubsection}{Exercise \arabic{subsection}}
+\renewcommand{\thesubsubsection}{\textbf{(\alph{subsubsection})}}
+\titleformat{\subsubsection}[runin]
+{\normalfont\normalsize}{\thesubsubsection}{1em}{}
+
+
+\begin{document}
+
+\maketitle
+
+\subsection{A two sector growth model}
+
+\subsubsection{}
+The state variables in this model are $k_{i, t}, k_{c, t}, z_{i, t}, z_{c, t}$. Define $K_t = (k_{i, t}, k_{c, t})$ and $Z_t = (z_{i, t}, z_{c, t})$. Also, notice that the utility function is strictly increasing in consumption; therefore, resource constraints in both the consumption and investment good sectors are going to be binding. Then, the problem could be written recursively as
+\begin{equation}
+	\begin{split}
+		V(K, Z) = \max\limits_{n_i, n_c, k_i', k_c'}\frac{z_c^{1 - \gamma_c}k_c^{\theta_c(1 - \gamma_c)}n_c^{(1 - \theta_c)(1 - \gamma_c)} - 1}{1 - \gamma_c} - B(n_i + n_c) + \beta\mathbb{E}_{Z'|Z}V(K', Z')\\
+		\text{ s.t. } k_i' + k_c' = z_ik_i^{\theta_i}n_i^{1 - \theta_i} + (1 - \delta)k_i + (1 - \delta)k_c \nonumber \\
+		\text{ or }V(K, Z) = \max\limits_{n_i, n_c, k_i', k_c'}\frac{z_c^{1 - \gamma_c}(\frac{k_i' + k_c' - z_ik_i^{\theta_i}n_i^{1 - \theta_i} - (1 - \delta)k_i}{1 - \delta})^{\theta_c(1 - \gamma_c)}n_c^{(1 - \theta_c)(1 - \gamma_c)} - 1}{1 - \gamma_c} - B(n_i + n_c) + \beta\mathbb{E}_{Z'|Z}V(K', Z')
+	\end{split}
+\end{equation}
+
+\subsubsection{}
+To solve this using dicrete dynamic programming we need to have discrete state space with Markov state transitions. This means we should discretize the state space for all the combinations of productivity levels in consumption and investment markets (e.g., by modifying Tauchen method). This allows us to obtain the discretized state space and transition matrix. We should also create a capital grid.
+
+Next, we would need to obtain analytical solution for $n_i$ and $n_c$ as functions of $k_i, k_c, k_i', k_c', z_i, z_c$. Once we have these policy functions, it is "relatively" straightforward to obtain a policy function for consumption depending on capital levels today and tomorrow. Using these we could create consumption, labour and utility matrices for each possible combination of $k_i, k_c, k_i', k_c', z_i, z_c$. Next, we perform the usual value function iteration to obtain the solution for the value function and optimal choices of capital next period, using transition matrix to compute conditional expectation of the initial guess of the value function matrix. However, notice that since we have four state variables, the dimensions of all the matrices grow quickly, slowing down the computation. For example, with 100 capital grid points and three possible states for productivity levels, consumption/labour/utility matrices are of size $100^23^2\times100^2$ and value function matrices are $100^2\times3^2$.
+
+\subsection{Business cycle in RBC}
+
+\end{document}
