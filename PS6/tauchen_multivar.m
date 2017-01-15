@@ -68,6 +68,7 @@ end
 
 Z_aux(:,k) = kron(ones(N^(k-1),1),Z(:,k));
 
+%how to work this out?
 p = mvncdf(Z_aux,mu,sigma);
 
 for j = 1:N^k

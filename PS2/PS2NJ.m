@@ -83,7 +83,7 @@ title('Optimal capital path starting at k_0 \approx 2')
 
 %% Exercise 2.2
 
-clear all
+% clear all
 
 % Assumptions
 rhho = 0.8;         % persistence of productivity shock
@@ -91,15 +91,15 @@ sigmma = 0.06;      % se of the error term in AR(1)
 S = 5;              % number of points in the Markov chain
 m = 2;              % width of Markov process
 mmu = 0;            % mean of Markov process
-alphha = 0.36;      % capital share
+alphha = 1/3;      % capital share
 betta = 0.99;       % time preference parameter
 deltta = 0.025;     % capital depreciation rate
 tolv = 1e-7;        % tolerance for value function iteration
-N = 500;            % number of capital grid-points
+N = 100;            % number of capital grid-points
 k0 = 2;             % starting level of capital
 T = 200;            % time period for simulation
 a0 = 1;             % starting level of productivity
-kmax = 70;          % upper bound for capital grid
+kmax = 2*k_ss;          % upper bound for capital grid
 
 %%% Generate the Markov Transition Matrix
 [Z,Zprob] = tauchen(S,mmu,rhho,sigmma,m);
