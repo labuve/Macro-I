@@ -57,4 +57,44 @@ Next, we would need to obtain analytical solution for $n_i$ and $n_c$ as functio
 
 \subsection{Business cycle in RBC}
 
+\subsubsection{}
+We delete the first 1000 periods of simulation to make sure that the initial period of transition has finished, so we can differentiate between the business cycles and path of the economy towards steady state. According to \Cref{fig:ex2kpath}, 1000 periods is quite enough as the fluctuations afterwards (red line) roughly speaking do not have a time trend and happen more or less around the steady-state.
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.7\textwidth]{ex2kpath.eps}
+	\caption{Simulated capital path}
+	\label{fig:ex2kpath}
+\end{figure}
+
+Define $g_j$ as the growth rate of variable $j\in\{c,y,a,i\}$, where $c$ stands for consumption, $y$ - output, $i$ - investment, $a$ - TFP. Then, moments from simulations are represented in the tables below.
+
+\begin{table}[!htb]
+	\centering
+	\begin{minipage}{0.49\textwidth}
+		\centering
+		\begin{tabular}{c|c}
+			 & $\sigma$ \\ \hline
+			$g_y$ & 0.0625 \\
+			$g_c$ & 0.0297 \\
+			$g_i$ & 1.1814
+		\end{tabular}
+		\subcaption{Standard deviation of growth rates}
+		\label{tab:ex2std}
+	\end{minipage}
+	\begin{minipage}{0.49\textwidth}
+		\centering
+		\begin{tabular}{c|cc}
+			 & $g_c$ & $g_i$ \\ \hline
+			$g_a$ & 0.6287 & 0.1797 \\
+			$g_y$ & 0.6478 & 0.1782
+		\end{tabular}
+		\subcaption{Correlation of growth rates}
+		\label{tab:ex2corr}
+	\end{minipage}
+	\caption{Unconditional moments from simulation for $t\geq1001$}
+\end{table}
+
+Simulated mean of capital for $t\geq1001$ is 42.8656, whereas the steady-state level of capital is 37.9893.
+\textcolor{red}{Comment}
+
 \end{document}

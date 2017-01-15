@@ -67,7 +67,7 @@ h = legend(strcat('ln(a) = ',num2str(Z(1), '%.2f')), ...
 set(h, 'Interpreter', 'latex')
 
 
-%%% Simulate a Markov Chain (starting at z0=0)
+%% Simulate a Markov Chain (starting at z0=0)
 % we start out with indices and then transform them into levels
 [mc, a_id] = markovsim(T, Z, log(a0), Zprob);
 
@@ -79,22 +79,27 @@ ylabel('Current State')
 title(strcat('Simulated Markov Chain with ', num2str(S), ' States'))
 
 %%% Optimal path for capital starting at k0, a0 = 1;
-% find capital grid point closest to k0
 [~,k0_id] = min(abs(k_grid-k_0));
 
 % initialize variable for the capital path (should hit 0 in period T+1)
 k_path = zeros(1,T);
+c_path = zeros(1,T);
+i_path = zeros(1,T);
+y_path = zeros(1,T);
 k_id = zeros(1,T);
-% "walk" the path using optimal index
-% we start by filling the path with indices and then transforming
-% those to levels that can be plotted
 k_id(1) = k0_id;
-k_path(1) = k_grid(k0_id); % start of at k0
+k_path(1) = k_grid(k0_id);
+y_path(1) = exp(mc(1))*k_path(1)^alpha;
 for i = 2:T
-    k_id(i) = k_idx(a_id(i-1), k_id(i-1));
-    k_path(i) = k_grid(k_id(i)); % use optimal capital choice from VFI
+    k_id(i) = k_idx(a_id(i-1), k_id(i-1)); % use optimal capital from VFI
+    k_path(i) = k_grid(k_id(i));
+    y_path(i) = exp(mc(i))*k_path(i)^alpha;
+    i_path(i-1) = k_path(i) - (1-delta)*k_path(i-1);
+    c_path(i-1) = y_path(i-1) - i_path(i-1); % optimal consumption path
 end
-    
+c_path(T) = NaN;
+i_path(T) = NaN;
+
 %%% Plotting optimal capital path
 figure(3)
 plot(1:T, k_path)
@@ -108,3 +113,30 @@ ylabel('Current Capital')
 title('Optimal capital path starting at steady state and a_0 = 1')
 legend('Capital path', 'Capital path without first 1000 periods', ...
     'Steady-state capital', 'Location','Best')
+
+% Unconditional moments
+
+growth_y = zeros(1, T);
+growth_c = zeros(1, T);
+growth_i = zeros(1, T);
+growth_a = zeros(1, T);
+
+for i = 2:T
+    growth_y(i) = y_path(i)/y_path(i-1)-1;
+    growth_c(i) = c_path(i)/c_path(i-1)-1;
+    growth_i(i) = i_path(i)/i_path(i-1)-1;
+    growth_a(i) = exp(mc(i) - mc(i-1))-1;
+end
+
+mat_std = zeros(1,3);
+mat_std(1) = nanstd(growth_y(1001:T));
+mat_std(2) = nanstd(growth_c(1001:T));
+mat_std(3) = nanstd(growth_i(1001:T));
+mat_std
+
+corrcoef(growth_c(1001:T-1), growth_a(1001:T-1))
+corrcoef(growth_i(1001:T-1), growth_a(1001:T-1))
+corrcoef(growth_c(1001:T-1), growth_y(1001:T-1))
+corrcoef(growth_i(1001:T-1), growth_y(1001:T-1))
+
+k_mean = mean(k_path(1001:T));
