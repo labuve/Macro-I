@@ -30,7 +30,7 @@ k_ss = (1/alpha*(1/beta - 1 + delta))^(1/(alpha - 1)); % steady state capital
 k_0 = 0.1*k_ss;     % starting level of capital
 
 % Capital grid
-k_grid = linspace(0, 2*k_ss, N);
+k_grid = linspace(0, 4*k_ss, N);
 
 % Discretize Markov chain
 [Z, Zprob] = tauchen(S, mu, rho, sigma, m);
@@ -170,7 +170,7 @@ k_ss = (1/alpha*(1/beta - 1 + delta))^(1/(alpha - 1)); % steady state capital
 k_0 = 0.1*k_ss;     % starting level of capital
 
 % Capital grid
-k_grid = linspace(0, 2*k_ss, N);
+k_grid = linspace(0, 4*k_ss, N);
 
 % Discretize Markov chain
 [Z, Zprob] = tauchen(S, mu, rho, sigma, m);
@@ -272,13 +272,13 @@ beta = Gbeta(2);
 delta = Gdelta(1);
 gamma = Ggamma(1);
 sigma = Gsigma(1);
-m = 0.7;
+% m = 0.7;
 N=2000;
 k_ss = (1/alpha*(1/beta - 1 + delta))^(1/(alpha - 1)); % steady state capital
 k_0 = 0.1*k_ss;     % starting level of capital
 
 % Capital grid
-k_grid = linspace(0, 2*k_ss, N);
+k_grid = linspace(0, 4*k_ss, N);
 
 % Discretize Markov chain
 [Z, Zprob] = tauchen(S, mu, rho, sigma, m);
@@ -384,7 +384,7 @@ k_ss = (1/alpha*(1/beta - 1 + delta))^(1/(alpha - 1)); % steady state capital
 k_0 = 0.1*k_ss;     % starting level of capital
 
 % Capital grid
-k_grid = linspace(0, 2*k_ss, N);
+k_grid = linspace(0, 4*k_ss, N);
 
 % Discretize Markov chain
 [Z, Zprob] = tauchen(S, mu, rho, sigma, m);
@@ -486,13 +486,13 @@ beta = Gbeta(1);
 delta = Gdelta(1);
 gamma = Ggamma(1);
 sigma = Gsigma(2);
-N = 1500;
-m = 0.7;
+N = 2000;
+% m = 0.7;
 k_ss = (1/alpha*(1/beta - 1 + delta))^(1/(alpha - 1)); % steady state capital
 k_0 = 0.1*k_ss;     % starting level of capital
 
 % Capital grid
-k_grid = linspace(0, 2.5*k_ss, N);
+k_grid = linspace(0, 4*k_ss, N);
 
 % Discretize Markov chain
 [Z, Zprob] = tauchen(S, mu, rho, sigma, m);
@@ -582,6 +582,7 @@ mat_corr(4) = Q(1, 2);
 clear Q
 
 k_mean = mean(k_path(1001:T));
+find(i_path(1001:T-1) == 0)
 
 mat_std
 mat_corr

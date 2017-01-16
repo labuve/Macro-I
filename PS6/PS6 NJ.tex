@@ -66,22 +66,34 @@ We delete the first 1000 periods of simulation to make sure that the initial per
 	\label{fig:ex2kpath}
 \end{figure}
 
-Define $g_j$ as the growth rate and $\sigma_j$ as the standard deviation of $g_j$ for $j\in\{c,y,a,i\}$, where $c$ stands for consumption, $y$ - output, $i$ - investment, $a$ - TFP. Then, moments from simulations are represented in the tables below.
+Define $g_j$ as the growth rate and $\sigma_j$ as the standard deviation of $g_j$ for $j\in\{c,y,a,i\}$, where $c$ stands for consumption, $y$ - output, $i$ - investment, $a$ - TFP. Then, moments from simulations are represented in \Cref{tab:ex2results}.
 
 \begin{table}[!htb]
 	\centering
 	\begin{tabular}{c|ccccccccc}
 	 & $\sigma_y$ & $\sigma_c$ & $\sigma_i$ & $\rho(g_c, g_a)$ & $\rho(g_i, g_a)$ & $\rho(g_c, g_y)$ & $\rho(g_i, g_y)$ & $\bar{k}$ & $k^{SS}$ \\ \hline
-	Original & 0.0597 & 0.0140 & 0.2388 & 0.7441 & 0.9449 & 0.7666 & 0.9391 & 39.0161 & 37.9893 \\
-	$\gamma = 4$ & 0.0557 & 0.0098 & 0.2169 & 0.7140 & 0.9707 & 0.7274 & 0.9684 & 40.1326 & 37.9893 \\
-	$\beta = 0.9$ & & & & & & & & & \\
-	$\delta = 0.05$ & 0.0544 & 0.0137 & 0.1640 & 0.7855 & 0.9869 & 0.8224 & 0.9813 & 16.5322 & 16.3953 \\
-	$\sigma = 0.1$ & 0.0914 & 0.0173 & 0.5425 & 0.6926 & 0.7823 & 0.7144 & 0.7745 & 38.3483 & 37.9893 \\
+	Original        & 0.0619 & 0.0185 & 0.2588  & 0.5702 & 0.9240 & 0.5903 & 0.9172 & 38.2526 & 37.9893 \\
+	$\gamma = 4$    & 0.0611 & 0.0150 & 0.2437  & 0.7524 & 0.9412 & 0.7659 & 0.9371 & 39.0030 & 37.9893 \\
+	$\beta = 0.9$   & 0.0624 & 0.0282 & 2.7E+12 & 0.8707 & 0.0334 & 0.9230 & 0.0328 & 4.7004  & 4.5710  \\
+	$\delta = 0.05$ & 0.0606 & 0.0190 & 0.1797  & 0.8131 & 0.9761 & 0.8460 & 0.9687 & 16.4836 & 16.3953 \\
+	$\sigma = 0.1$  & 0.1020 & 0.0227 & 3.5773  & 0.7536 & 0.1499 & 0.7774 & 0.1486 & 41.9238 & 37.9893
 	\end{tabular}
 	\caption{Unconditional moments from simulation for $t\geq1001$}
+	\label{tab:ex2results}
 \end{table}
 
-
-\textcolor{red}{Comment}
+\begin{enumerate}[label = \alph*)]
+	\item Parameter $\gamma$ in CRRA utility measures the relative risk aversion of the consumer and $\gamma\to\infty$ corresponds to the case of infinite risk aversion. Hence, as $\gamma$ increases from 1 to 4, consumer gets more risk-averse and thus wants to keep the intertemporal ratio of consumption as constant as possible. Then, in presence of positive shock to TFP, the rhs of the Euler equation \eqref{eq:ex2foc} increases. For the equality to hold, we need to increase capital for the next period. However, this would also increase consumption next period. Since the consumer now prefers consumption to be as smooth as possible, he/she would also need to increase consumption today to keep the ratio relatively constant and the required rise in current consumption would be higher than in case $\gamma = 1$. Hence, consumption path becomes less volatile in terms of standard deviation of growth, but also more correlated with output and productivity growth.
+	\begin{equation}
+		1 = \beta\mathbb{E}_{a'|a}\left[(\frac{c'}{c})^{-\gamma}(\alpha a'(k')^{\alpha - 1} + 1 - \delta)\right]
+		\label{eq:ex2foc}
+	\end{equation}
+	
+	\item $\beta$ measures the patience of the consumer over time; so as $\beta$ decreases, the consumer gets more impatient. Therefore, he/she is less willing to smooth consumption over time and consumption path gets more volatile. From Euler equation in \eqref{eq:ex2foc} we see that when $\beta$ decreases, the rhs decreases and for the equality to hold a consumer has to either consume more ($(\frac{c'}{c})^{-\gamma}$ increases) or save less ($(\frac{1}{k'})^{1 - \alpha}$ increases), or both. This implies that as productivity level $a$ increases and is persistent, consumer is more willing to increase consumption today than saving for future consumption. This means that consumption growth becomes more volatile and more correlated with productivity growth compared to the initial model.
+	
+	\item $\delta$ measures the depreciation rate of the capital. When $\delta$ increases, one needs to save more to achieve same level of capital. Hence, with higher depreciation rate a consumer's willingness to save decreases and willingness to consume increases. Then, from \eqref{eq:ex2foc} we can see that in presence of a positive shock to $a$, in equilibrium a consumer needs to increase capital next period and/or decrease consumption today. With higher $\delta$, the latter is more likely to happen than the former. Hence, consumption becomes more volatile and correlated with TFP compared to the initial model.
+	
+	\item The larger is $\sigma$ the more volatile is the productivity shock and the state state space for productivity levels is wider. Thus, a positive shock to an economy means much higher productivity levels than before. As now any given amount of capital produces more output, both consumption and savings increase significantly. However, as consumer is risk-averse investment responds more elastically to productivity changes. However, as volatility of investment rises significantly, it attenuates correlation statistics for investment.
+\end{enumerate}
 
 \end{document}
