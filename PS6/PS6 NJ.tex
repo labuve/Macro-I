@@ -66,35 +66,22 @@ We delete the first 1000 periods of simulation to make sure that the initial per
 	\label{fig:ex2kpath}
 \end{figure}
 
-Define $g_j$ as the growth rate of variable $j\in\{c,y,a,i\}$, where $c$ stands for consumption, $y$ - output, $i$ - investment, $a$ - TFP. Then, moments from simulations are represented in the tables below.
+Define $g_j$ as the growth rate and $\sigma_j$ as the standard deviation of $g_j$ for $j\in\{c,y,a,i\}$, where $c$ stands for consumption, $y$ - output, $i$ - investment, $a$ - TFP. Then, moments from simulations are represented in the tables below.
 
 \begin{table}[!htb]
 	\centering
-	\begin{minipage}{0.49\textwidth}
-		\centering
-		\begin{tabular}{c|c}
-			 & $\sigma$ \\ \hline
-			$g_y$ & 0.0625 \\
-			$g_c$ & 0.0297 \\
-			$g_i$ & 1.1814
-		\end{tabular}
-		\subcaption{Standard deviation of growth rates}
-		\label{tab:ex2std}
-	\end{minipage}
-	\begin{minipage}{0.49\textwidth}
-		\centering
-		\begin{tabular}{c|cc}
-			 & $g_c$ & $g_i$ \\ \hline
-			$g_a$ & 0.6287 & 0.1797 \\
-			$g_y$ & 0.6478 & 0.1782
-		\end{tabular}
-		\subcaption{Correlation of growth rates}
-		\label{tab:ex2corr}
-	\end{minipage}
+	\begin{tabular}{c|ccccccccc}
+	 & $\sigma_y$ & $\sigma_c$ & $\sigma_i$ & $\rho(g_c, g_a)$ & $\rho(g_i, g_a)$ & $\rho(g_c, g_y)$ & $\rho(g_i, g_y)$ & $\bar{k}$ & $k^{SS}$ \\ \hline
+	Original & 0.0597 & 0.0140 & 0.2388 & 0.7441 & 0.9449 & 0.7666 & 0.9391 & 39.0161 & 37.9893 \\
+	$\gamma = 4$ & 0.0557 & 0.0098 & 0.2169 & 0.7140 & 0.9707 & 0.7274 & 0.9684 & 40.1326 & 37.9893 \\
+	$\beta = 0.9$ & & & & & & & & & \\
+	$\delta = 0.05$ & 0.0544 & 0.0137 & 0.1640 & 0.7855 & 0.9869 & 0.8224 & 0.9813 & 16.5322 & 16.3953 \\
+	$\sigma = 0.1$ & 0.0914 & 0.0173 & 0.5425 & 0.6926 & 0.7823 & 0.7144 & 0.7745 & 38.3483 & 37.9893 \\
+	\end{tabular}
 	\caption{Unconditional moments from simulation for $t\geq1001$}
 \end{table}
 
-Simulated mean of capital for $t\geq1001$ is 42.8656, whereas the steady-state level of capital is 37.9893.
+
 \textcolor{red}{Comment}
 
 \end{document}
